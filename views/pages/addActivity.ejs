@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+</head>
+
+<body class="container">
+
+  <header>
+    <% include ../partials/header %>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <form action="/activity/create/creating" method="post">
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="validationDefault01">Name</label>
+            <input type="text" class="form-control" name="name" id="validationDefault01" placeholder="Name" value="" required>
+          </div>      
+        <div class="col-md-6 mb-3">
+          <label for="validationDefault02">Content</label>
+          <input type="text" class="form-control" name="content" placeholder="content" value="" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="validationDefault02">Facaulty</label>
+          <input type="text" class="form-control" name="facaulty" placeholder="facaulty" value="" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="validationDefault04">Tel</label>
+          <input type="text" class="form-control" name="tel" id="validationDefault04" placeholder="tel" required>
+        </div>
+      </div>
+        <div>
+          <input type="submit" value="submit" class="btn btn-primary">
+        </div>
+
+      </form>
+
+
+    </div>
+  </main>
+
+
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+
+</body>
+
+</html>

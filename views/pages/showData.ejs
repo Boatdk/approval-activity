@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+</head>
+
+<body class="container">
+
+  <header>
+    <% include ../partials/header %>
+  </header>
+
+  <main>
+      
+      <style>
+          table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+          }
+          
+          td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+          }
+          
+          tr:nth-child(even) {
+              background-color: #dddddd;
+          }
+          </style>
+      <div class="jumbotron">
+          <h2>Activity</h2>
+          <table>
+            <thead class="thead-light">
+              <tr>
+                  <th>id</th>
+                  <th>name</th>
+                  <th>tel</th>
+                  <th>samo</th>
+                  <th>union</th>
+                  <th>council</th>
+                  <th>affair</th>
+                  <th>more</th>
+              </tr>
+            </thead>
+ 
+            <% data.forEach(function(Data) { %>
+                  <tr>
+                    <td><%= Data.id %></td>
+                    <td><%= Data.name %></td>
+                    <td><%= Data.tel %></td>
+                    <td><%= Data.samo %></td>
+                    <td><%= Data.sUnion %></td>
+                    <td><%= Data.sCouncil %></td>
+                    <td><%= Data.sAffair %></td>
+                    <td><form>
+                        <button type="button" class="btn btn-info">detail</button>                       
+                    </form>
+                      </td>
+                    
+                  </tr>    
+            <% }); %>
+          </table>
+        
+      </div> 
+  </main>
+
+
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+
+</body>
+
+</html>

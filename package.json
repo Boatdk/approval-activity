@@ -4,7 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js --watch common --watch server",
     "test": "mocha --timeout 10000",
     "start": "node server.js"
   },

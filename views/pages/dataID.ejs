@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+</head>
+
+<body class="container">
+
+  <header>
+    <% include ../partials/header %>
+  </header>
+
+  <main>
+      <div class="jumbotron">
+        <h4> ชื่อโครงการ : <%= data.name %> </h4>
+        <h4> เนื้อหาโครงการ : <%= data.content %></h4> 
+        <h4> จัดทำโดย : <%= data.facaulty %></h4> 
+        <h4> เบอร์โทรศัพท์ : <%= data.tel %></h4>
+        <h4> สถานะ <% if(data.status) {%>
+             ผ่านการอนุมัติ
+            <% } else { %>
+            ไม่ผ่านการอนุมัติ
+            <% }  %></h4>
+        
+      </div> 
+  </main>
+
+
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+
+</body>
+
+</html>

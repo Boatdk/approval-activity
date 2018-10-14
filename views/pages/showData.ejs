@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +12,9 @@
   </header>
 
   <main>
-      
-      <style>
-          table {
+
+    <style>
+      table {
               font-family: arial, sans-serif;
               border-collapse: collapse;
               width: 100%;
@@ -31,41 +30,76 @@
               background-color: #dddddd;
           }
           </style>
-      <div class="jumbotron">
-          <h2>Activity</h2>
-          <table>
-            <thead class="thead-light">
-              <tr>
-                  <th>id</th>
-                  <th>name</th>
-                  <th>tel</th>
-                  <th>samo</th>
-                  <th>union</th>
-                  <th>council</th>
-                  <th>affair</th>
-                  <th>more</th>
-              </tr>
-            </thead>
- 
-            <% data.forEach(function(Data) { %>
-                  <tr>
-                    <td><%= Data.id %></td>
-                    <td><%= Data.name %></td>
-                    <td><%= Data.tel %></td>
-                    <td><%= Data.samo %></td>
-                    <td><%= Data.sUnion %></td>
-                    <td><%= Data.sCouncil %></td>
-                    <td><%= Data.sAffair %></td>
-                    <td><form>
-                        <button type="button" class="btn btn-info">detail</button>                       
-                    </form>
-                      </td>
-                    
-                  </tr>    
-            <% }); %>
-          </table>
-        
-      </div> 
+    <div class="jumbotron">
+      <h2>Activity</h2>
+      <table>
+        <thead class="thead-light">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Facaulty</th>
+            <th>Samo</th>
+            <th>Union</th>
+            <th>Council</th>
+            <th>Affair</th>
+            <th>Tel</th>
+            <th>More</th>
+          </tr>
+        </thead>
+
+        <% data.forEach(function(Data) { %>
+        <tr>
+          <td>
+            <%= Data.id %>
+          </td>
+          <td>
+            <%= Data.name %>
+          </td>
+          <td>
+            <%= Data.facaulty %>
+          </td>
+          <td>
+            <% if(Data.samo) {%>
+            <i class="fas fa-check"></i>
+            <% } else { %>
+            <i class="fas fa-times"></i>
+            <% }  %>
+          </td>
+          <td>
+            <% if(Data.sUnion) {%>
+            <i class="fas fa-check"></i>
+            <% } else { %>
+            <i class="fas fa-times"></i>
+            <% }  %>
+          </td>
+          <td>
+            <% if(Data.sCouncil) {%>
+            <i class="fas fa-check"></i>
+            <% } else { %>
+            <i class="fas fa-times"></i>
+            <% }  %>
+          </td>
+          <td>
+            <% if(Data.sAffair) {%>
+            <i class="fas fa-check"></i>
+            <% } else { %>
+            <i class="fas fa-times"></i>
+            <% }  %>
+          </td>
+          <td>
+            <%= Data.tel %>
+          </td>
+          <td>
+            <form>
+              <button type="button" class="btn btn-info" onclick="window.location.href='/activity/detail?id=<%= Data.id %>'">detail</button>
+            </form>
+          </td>
+
+        </tr>
+        <% }); %>
+      </table>
+
+    </div>
   </main>
 
 

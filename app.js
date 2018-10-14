@@ -8,7 +8,7 @@ var postActivity = require('./api/activity').postActivity
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: true
 }))
 
 app.use(morgan('dev'))
@@ -21,41 +21,55 @@ app.get('/', (req, res) => {
 })
 
 app.get('/index', (req, res) => {
-    res.render('pages/index')
+  res.render('pages/index')
 })
 
 app.get('/activity', (req, res) => {
-    return getActivity().then((resp) => {
-        res.render('pages/showData', {
-            data: resp
-        })
+  return getActivity().then((resp) => {
+    res.render('pages/showData', {
+      data: resp
     })
- })
+  })
+})
 
 app.get('/activity/create', (req, res) => {
-    res.render('pages/addActivity')
+  res.render('pages/addActivity')
 })
 
 app.post('/activity/create/creating', (req, res) => {
-    let body = req.body
-    let data = {
-        name : body.name,
-        content :  body.content,
-        facaulty:  body.facaulty,
-        tel:  body.tel,
-      }
-    return postActivity(data).then((resp) => {
-        res.redirect('/index')
+  let body = req.body
+  let data = {
+    name: body.name,
+    content: body.content,
+    facaulty: body.facaulty,
+    tel: body.tel,
+  }
+  return postActivity(data).then((resp) => {
+    res.redirect('/index')
+  })
+})
+
+app.get('/activity/detail', (req, res) => {
+  const query = req.query
+  if (query.id) {
+    return getActivity(query.id).then((resp) => {
+      res.render('pages/dataID', {
+        data: resp[0]
+      })
     })
+  } else {
+    res.redirect('/activity')
+  }
+
 })
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-    res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept")
-    res.header('Access-Control-Allow-Credentials', true)
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+  res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept")
+  res.header('Access-Control-Allow-Credentials', true)
 
-    next()
+  next()
 })
 
 module.exports = app

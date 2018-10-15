@@ -1,36 +1,73 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <% include ../partials/head %>
+    <% include ../partials/head %>
 </head>
 
 <body class="container">
 
-  <header>
-    <% include ../partials/header %>
-  </header>
+    <header>
+        <% include ../partials/header %>
+    </header>
 
-  <main>
-      <div class="jumbotron">
-        <h4> ชื่อโครงการ : <%= data.name %> </h4>
-        <h4> เนื้อหาโครงการ : <%= data.content %></h4> 
-        <h4> จัดทำโดย : <%= data.facaulty %></h4> 
-        <h4> เบอร์โทรศัพท์ : <%= data.tel %></h4>
-        <h4> สถานะ <% if(data.status) {%>
-             ผ่านการอนุมัติ
-            <% } else { %>
-            ไม่ผ่านการอนุมัติ
-            <% }  %></h4>
-        
-      </div> 
-  </main>
+    <main>
+        <div class="jumbotron">
+            <h4> ชื่อโครงการ :
+                <%= data.name %>
+            </h4>
+            <h4> เนื้อหาโครงการ :
+                <%= data.content %>
+            </h4>
+            <h4> จัดทำโดย :
+                <%= data.facaulty %>
+            </h4>
+            <h4> เบอร์โทรศัพท์ :
+                <%= data.tel %>
+            </h4>
+            <h5>สถานะสโมสร :
+                <% if(data.samo) {%>
+                ผ่านการอนุมัติ
+                <% } else { %>
+                ไม่ผ่านการอนุมัติ
+                <% }  %>
+            </h5>
+            <h5>สถานะองค์การนักศึกษา :
+                <% if(data.sUnion) {%>
+                ผ่านการอนุมัติ
+                <% } else { %>
+                ไม่ผ่านการอนุมัติ
+                <% }  %>
+            </h5>
+            <h5>สถานะสภานักศึกษา :
+                <% if(data.sCouncil) {%>
+                ผ่านการอนุมัติ
+                <% } else { %>
+                ไม่ผ่านการอนุมัติ
+                <% }  %>
+            </h5>
+            <h5>สถานะกองกิจการนักศึกษา :
+                <% if(data.sAffair) {%>
+                ผ่านการอนุมัติ
+                <% } else { %>
+                ไม่ผ่านการอนุมัติ
+                <% }  %>
+            </h5>
+            <h5> สถานะโครงการ :
+                <% if(data.status) {%>
+                <label>ผ่านการอนุมัติ</label>
+                <% } else { %>
+                ไม่ผ่านการอนุมัติ
+                <% }  %>
+            </h5>
+
+        </div>
+    </main>
 
 
-  <footer>
-    <% include ../partials/footer %>
-  </footer>
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
 
 </body>
 

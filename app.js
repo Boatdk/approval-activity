@@ -17,7 +17,7 @@ app.use(methodOverride())
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-  res.render('Login/login')
+  res.render('pages/login')
 })
 
 app.get('/index', (req, res) => {

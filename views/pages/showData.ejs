@@ -33,17 +33,16 @@
     <div class="jumbotron">
       <h2>Activity</h2>
       <p>สามารถเพิ่มโครงการได้ที่นี่ <a href='/activity/create'>add</a></p>
-      
+
       <table>
         <thead class="thead-light">
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Facaulty</th>
-            <th>Samo</th>
-            <th>Union</th>
-            <th>Council</th>
-            <th>Affair</th>
+            <th>id</th>
+            <th>ชื่อโครงการ</th>
+            <th>องค์กรจัดกิจกรรม</th>
+            <th>สถานะการจัดกิจกรรม</th>
+            <th>เริ่มจัดวันที่</th>
+            <th>สิ้นสุดวันที่</th>
             <th>Tel</th>
             <th>More</th>
           </tr>
@@ -52,13 +51,13 @@
         <% data.forEach(function(Data) { %>
         <tr>
           <td>
-            <%= Data.id %>
+            <%= Data.id_activity %>
           </td>
           <td>
-            <%= Data.name %>
+            <%= Data.act_name %>
           </td>
           <td>
-            <%= Data.facaulty %>
+            <%= Data.org_name%>
           </td>
           <td>
             <% if(Data.samo) {%>
@@ -68,32 +67,17 @@
             <% }  %>
           </td>
           <td>
-            <% if(Data.sUnion) {%>
-            <i class="fas fa-check"></i>
-            <% } else { %>
-            <i class="fas fa-times"></i>
-            <% }  %>
+            <%= Data.act_start%>
           </td>
           <td>
-            <% if(Data.sCouncil) {%>
-            <i class="fas fa-check"></i>
-            <% } else { %>
-            <i class="fas fa-times"></i>
-            <% }  %>
-          </td>
-          <td>
-            <% if(Data.sAffair) {%>
-            <i class="fas fa-check"></i>
-            <% } else { %>
-            <i class="fas fa-times"></i>
-            <% }  %>
+            <%= Data.act_end%>
           </td>
           <td>
             <%= Data.tel %>
           </td>
           <td>
             <form>
-              <button type="button" class="btn btn-info" onclick="window.location.href='/activity/detail?id=<%= Data.id %>'">detail</button>
+              <button type="button" class="btn btn-info" onclick="window.location.href='/activity/detail?id=<%= Data.id_activity %>'">detail</button>
             </form>
           </td>
 

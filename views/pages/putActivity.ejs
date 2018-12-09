@@ -19,58 +19,58 @@
           <div class="col-md-6 mb-3">
             <label for="validationDefault01">ชื่อองค์กรกิจกรรม</label>
             <input type="text" class="form-control" name="org_name" id="validationDefault01" placeholder="ชื่อองค์กรกิจกรรม"
-              value="" required>
+              value="<%= data.org_name %>" required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault02">หนังสือที่</label>
-            <input type="text" class="form-control" name="book_num" placeholder="หนังสือที่" value="" required>
+            <input type="text" class="form-control" name="book_num" placeholder="หนังสือที่" value="<%= data.book_num %>"
+              required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault02">ขออนุมัติกิจกรรม</label>
-            <input type="text" class="form-control" name="act_name" placeholder="ชื่อกิจกรรม" value="" required>
+            <input type="text" class="form-control" name="act_name" placeholder="ชื่อกิจกรรม" value="<%= data.act_name %>"
+              required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault04">เรียนถึง</label>
             <input type="text" class="form-control" name="dear_to" id="validationDefault04" placeholder="เรียนถึง"
-              required>
+              value="<%= data.dear_to %>" required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault04">เริ่มจัดโครงการวันที่</label>
-            <input type="date" class="form-control" name="act_start" id="validationDefault04" placeholder="tel"
+            <input type="date" class="form-control" name="act_start" id="validationDefault04" placeholder="tel" value="<%= data.act_start %>"
               required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault04">สิ้นสุดโครงการวันที่</label>
-            <input type="date" class="form-control" name="act_end" id="validationDefault04" placeholder="tel" required>
+            <input type="date" class="form-control" name="act_end" id="validationDefault04" placeholder="tel" value="<%= data.act_end %>"
+              required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault04">สถานที่จัดกิจกรรม</label>
             <input type="text" class="form-control" name="act_place" id="validationDefault04" placeholder="สถานที่"
-              required>
+              value="<%= data.act_place %>" required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault04">งบประมาณจาก</label>
-            <input type="text" class="form-control" name="act_money" id="validationDefault04" placeholder="งบประมาณจากที่ใด"
-              required>
+            <input type="text" class="form-control" name="mn_from" id="validationDefault04" placeholder="งบประมาณจากที่ใด"
+              value="<%= data.mn_from %>" required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault04">จำนวนเงินที่ใช้ในกิจกรรม</label>
-            <input type="text" class="form-control" name="act_money" id="validationDefault04" placeholder="เงิน"
+            <input type="text" class="form-control" name="act_money" id="validationDefault04" placeholder="เงิน" value="<%= data.act_money %>"
               required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault04">จำนวนชั่วโมงที่ได้รับ</label>
             <input type="text" class="form-control" name="act_hours" id="validationDefault04" placeholder="ชั่วโมง"
-              required>
+              value="<%= data.act_hours %>" required>
           </div>
           <div class="col-md-6 mb-3">
             <label for="validationDefault04">เบอร์โทรศัพท์</label>
             <input type="text" class="form-control" name="tel" id="validationDefault04" placeholder="เบอร์โทรศัพท์"
-              required>
+              value="<%= data.tel %>" required>
           </div>
-        </div>
-        <div>
-          <button type="button" class="btn btn-info" onclick="window.location.href='/activity/detail/upload'">upload</button>
         </div>
         <div>
           <input type="submit" value="submit" class="btn btn-primary">

@@ -7,6 +7,8 @@ var getActivity = require('./api/activity').getActivity
 var postActivity = require('./api/activity').postActivity
 var postUser =require('./api/user').postUser
 var getUser = require('./api/user').getUser
+var putActivity = require('./api/activity').putActivity
+const doQuery = require('./utils/doQuery')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -53,20 +55,7 @@ app.get('/activity/create', (req, res) => {
 
 app.post('/activity/create/creating', (req, res) => {
   let body = req.body
-  let data = {
-    org_name: body.org_name,
-    book_num: body.book_num,
-    act_name: body.act_name,
-    dear_to: body.dear_to,
-    act_start: body.act_start,
-    act_end: body.act_end,
-    act_place: body.act_place,
-    act_money: body.act_money,
-    act_hours: body.act_hours,
-    mn_from: body.mn_from,
-    tel: body.tel
-  }
-  return postActivity(data).then((resp) => {
+  return postActivity(body).then((resp) => {
     res.redirect('/activity')
   })
 })
@@ -76,15 +65,16 @@ app.get('/user/create', (req, res) => {
 
 app.post('/user/create/creating', (req, res) => {
   let body = req.body
-  let data = {
-    firstname: body.firstname,
-    lastname: body.lastname,
-    email: body.email,
-    password: body.password,
-    tel: body.tel
-  }
-  return postUser(data).then((resp) => {
-    res.redirect('/')
+  return postUser(body).then((resp) => {
+    if(resp.message == 'added success'){
+      res.redirect('/')
+    }
+    if(resp.message == 'email is require'){
+      res.render('pages/addUser', {data: resp})
+    }
+    if(resp.length > 0){
+      res.render('pages/addUser', {data: resp})
+    }
   })
 })
 
@@ -93,9 +83,13 @@ app.get('/activity/detail', (req, res) => {
   const query = req.query
   if (query.id) {
     return getActivity(query.id).then((resp) => {
-      res.render('pages/dataID', {
-        data: resp[0]
-      })
+      var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
+      doQuery(sql).then(status => {
+        res.render('pages/dataID', {
+          data: resp[0],
+          data2: status[0]
+        })
+      })     
     })
   } else {
     res.redirect('/activity')
@@ -115,6 +109,15 @@ app.get('/activity/update', (req, res) => {
     res.redirect('/activity')
   }
 })
+
+app.post('/activity/update/updating', (req, res) => {
+  let body = req.body
+  console.log(body)
+  return putActivity(body).then((resp) => {
+    res.redirect('/activity')
+  })
+})
+
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')

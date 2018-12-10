@@ -39,17 +39,23 @@ router.route('/activity/create')
 
   .post((req, res) => {
     var body = req.body
+    console.log(body)
     var sql = `INSERT INTO activity(org_name, book_num, act_name, dear_to, act_start, act_end, act_place, act_money, act_hours, tel, mn_from) 
               VALUES ('${body.org_name}', '${body.book_num}', '${body.act_name}', '${body.dear_to}', '${body.act_start}', 
               '${body.act_end}', '${body.act_place}','${body.act_money}', '${body.act_hours}', '${body.tel}', '${body.mn_from}')`
-    doQuery(sql).then(resp => res.json({
-        message: 'added success'
-      }))
-      .catch((err) => {
+    doQuery(sql).then(resp => {
+      // console.log(resp.insertId)
+      var sql2 = `INSERT INTO statusactivity (id_activity) VALUES ('${resp.insertId}')`
+      doQuery(sql2).then(resp => {
         res.json({
-          message: err
+          message: 'added success'
         })
       })
+    }).catch((err) => {
+      res.json({
+        message: err
+      })
+    })
 
   })
 
@@ -57,10 +63,13 @@ router.route('/activity/update')
 
   .post((req, res) => {
     var body = req.body
-    var sql = `UPDATE activity SET org_name='${body.org_name}', book_num='${body.book_num}', dear_to='${body.dear_to}', act_start='${body.act_start}', act_end='${body.act_end}', 
-              act_place='${body.act_place}' , act_money='${body.act_money}', act_hours='${body.act_hours}', tel='${body.tel}', mn_from='${body.mn_from}' WHERE id_activity='${query.id}'`
+    var query = req.query
+    var sql = `UPDATE activity SET org_name = '${body.org_name}', book_num = '${body.book_num}', act_name = '${body.act_name}', dear_to = '${body.dear_to}', act_money='${body.act_money}',
+    act_place = '${body.act_place}', mn_from = '${body.mn_from}', act_hours = '${body.act_hours}', tel = '${body.tel}', act_start ='${body.act_start}', act_end='${body.act_end}' 
+    WHERE activity.id_activity = '${body.id_activity}'`
     doQuery(sql).then(resp => res.json({
-        message: 'update success '
+        message: ' update success ',
+        resp
       }))
       .catch((err) => {
         res.json({

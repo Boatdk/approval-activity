@@ -13,8 +13,8 @@
 
   <main>
     <div class="jumbotron">
-      <form action="/activity/create/creating" method="post">
-
+      <form action="/activity/update/updating" method="post">
+      <h3>แก้ไขข้อมูลโครงการ</h3>
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="validationDefault01">ชื่อองค์กรกิจกรรม</label>
@@ -72,6 +72,7 @@
               value="<%= data.tel %>" required>
           </div>
         </div>
+        <input type="hidden" name="id_activity" value="<%= data.id_activity %>">
         <div>
           <input type="submit" value="submit" class="btn btn-primary">
         </div>

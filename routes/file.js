@@ -19,7 +19,6 @@ router
         message: 'success',
         resp: resp,
         data: req.file
-
       })
     })
   })

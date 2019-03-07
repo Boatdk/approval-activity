@@ -51,6 +51,12 @@ router.route('/activity/create')
           message: 'added success'
         })
       })
+      var sql3 = `INSERT INTO fileactivity(id_activity) VALUES ('${resp.insertId}')`
+      doQuery(sql3).then(resp => {
+        res.json({
+          message: 'added id_activity with file success'
+        })
+      })
     }).catch((err) => {
       res.json({
         message: err

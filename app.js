@@ -9,6 +9,10 @@ var postUser =require('./api/user').postUser
 var getUser = require('./api/user').getUser
 var putActivity = require('./api/activity').putActivity
 const doQuery = require('./utils/doQuery')
+var session = require('express-session')
+
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 },
+   resave : false, saveUninitialized: false }))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -20,21 +24,76 @@ app.use(methodOverride())
 
 app.set('view engine', 'ejs')
 
-app.get('/activity/detail/upload', (req, res) => {
-  res.render('pages/upload')
+app.get('/activity/file', (req, res) => {
+  const query = req.query
+  if (query.id) {
+    return getActivity(query.id).then((resp) => {
+      res.render('pages/upload', {
+        data: resp[0]
+      })
+    })
+  } else {
+    res.redirect('/activity')
+  }
+})
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+      res.redirect('/')
+    })
 })
 
-app.get('/activity/detail/upload', function (req, res) {
-  res.sendFile(__dirname + '/upload.ejs');
-});
 
-app.post('/upload', function (req, res) {
-  res.send(req.files);
-});
+var login = true
+app.post('/activity', (req, res) => {
+  return getUser().then((resp)=>{
+    let body = req.body
+    const session = req.session
+    var sql = `SELECT * FROM user WHERE email='${body.email}'`
+    doQuery(sql).then((value) => {
+      if(value[0]){
+        console.log(value)
+        if(body.email != value[0].email){
+          
+        }
+        if(body.email == value[0].email){
+          data3 = {
+            email : body.email,
+            firstname: value[0].firstname,
+            type : value[0].type
+          }
+          session.email = body.email
+          return getActivity().then((resp) => {
+            var sql = `SELECT * FROM statusactivity`
+            doQuery(sql).then((status)=> {
+              res.render('pages/showData', {
+                data: resp,
+                data2: status[0],
+                data3
+              })
+            })
+           
+          })
+        }
+      }
+      else{
+        login = false
+        data = {
+          message: 'Wrong email or passwords'
+        }
+        res.render('pages/SignIn', {login, data})
+      }
+    })
+
+  })
+})
 
 
 app.get('/', (req, res) => {
-  res.render('pages/login')
+  return getUser().then((resp) => {
+    // console.log(resp[0].email)
+    res.render('pages/SignIn', {login})
+  })
+  
 })
 
 app.get('/index', (req, res) => {
@@ -43,9 +102,14 @@ app.get('/index', (req, res) => {
 
 app.get('/activity', (req, res) => {
   return getActivity().then((resp) => {
-    res.render('pages/showData', {
-      data: resp
+    var sql = `SELECT * FROM statusactivity`
+    doQuery(sql).then((status)=> {
+      res.render('pages/showData', {
+        data: resp,
+        data2: status[0]
+      })
     })
+    
   })
 })
 
@@ -63,6 +127,7 @@ app.get('/user/create', (req, res) => {
   res.render('pages/addUser')
 })
 
+
 app.post('/user/create/creating', (req, res) => {
   let body = req.body
   return postUser(body).then((resp) => {
@@ -79,13 +144,35 @@ app.post('/user/create/creating', (req, res) => {
 })
 
 
+app.get('/activity/detail-Admin', (req, res) => {
+  
+  const query = req.query
+  if(req.session.email){
+    if (query.id) {
+      return getActivity(query.id).then((resp) => {
+        var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
+        doQuery(sql).then(status => {
+          res.render('pages/dataID-Admin', {
+            data: resp[0],
+            data2: status[0]
+          })
+        })     
+      })
+    } else {
+      res.redirect('/activity')
+    }
+  }
+  
+
+})
+
 app.get('/activity/detail', (req, res) => {
   const query = req.query
   if (query.id) {
     return getActivity(query.id).then((resp) => {
       var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
       doQuery(sql).then(status => {
-        res.render('pages/dataID', {
+        res.render('pages/dataID-user', {
           data: resp[0],
           data2: status[0]
         })

@@ -1,5 +1,5 @@
 const axios = require('axios')
-
+var localhost = `http://localhost:7777/api/activity`
 module.exports = {
     getActivity(id){
         let url

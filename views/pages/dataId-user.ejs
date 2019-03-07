@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <% include ../partials/head %>
+</head>
+
+<body>
+
+  <header>
+    <% include ../partials/header %>
+  </header>
+
+
+  <main> 
+    <div class="container" style="margin-top:90px ">
+        <h2 align="center">ข้อมูลโครงการ</h2>
+    </div>
+    <div class="container space border-block">
+        <div class="container">
+            <div class="row">
+              <div class="col space-block space">
+                  <div>
+                      <h5>องค์กรจัดกิจกรรม : <%= data.org_name %> </h5> 
+                  </div>
+                
+              </div>
+              <div class="col space-block space">
+                <h5> ชื่อกิจกรรม : <%= data.act_name %></h5>
+              </div>
+            </div>
+          </div>
+        <div class="container">
+              <div class="row">
+                <div class="col space-block">
+                  <h5>เรียนถึง : <%= data.dear_to %></h5>
+                </div>
+              </div>
+        </div>
+        <div class="container">
+            <div class="row">
+              <div class="col space-block">
+                  <h5>จัดกิจกรรมระหว่างวันที่ : <%= data.act_start %> ถึง  <%= data.act_end %></h5>
+              </div>
+              </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col space-block">
+                <h5>ใช้งบประมาณจาก :  <%= data.mn_from %></h5>
+            </div>
+            <div class="col space-block">
+                <h5>จำนวน : <%= data.act_money %></h5>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col space-block">
+              <h5>จำชวนชั่วโมงกิจกรรม:
+                  <%= data.act_hours %></h5>
+                
+            </div>
+            <div class="col space-block">
+                <h5>เบอร์โทรติดต่อ:
+                    <%= data.tel %>
+                </h5>
+            </div> 
+          </div>
+        </div>
+        <div class="right-top">
+            <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/activity/update?id=<%= data.id_activity %>'">edit</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/activity/file?id=<%= data.id_activity %>'">upload</button>
+        </div>
+      
+    </div>
+
+      <div class="container">
+          <div class="container " style="margin-top:20px ">
+              <h2 align="center">สถานะการดำเนินโครงการ</h2>
+          </div>
+        <div class="container space">
+          <div class="row">
+            <div class="col border-block space-block">
+              <div class="space">
+                  <h6>อาจารย์ที่ปรึกษา : 
+                      <% if(data2.adv === 1) {%>
+                      <a style="color:green">ผ่านการอนุมัติ</a>            
+                      <% } if (data2.adv === 0){ %>
+                      <a style="color:blue">รอการอนุมัติ</a>
+                      <%  } if (data2.adv === 2){ %>
+                      <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                      <% }  %>
+                     
+                    </h6>
+              </div>
+                
+                  <div class="form-group">
+                      <label for="exampleFormControlTextarea1">ความเห็น</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+                  </div>
+            </div>
+            <div class="col border-block space-block">
+              <div class="space">
+                  <h6>องค์การบริหาร องค์การนักศึกษา :
+                      <% if(data2.stdU === 1) {%>
+                      <a style="color:green">ผ่านการอนุมัติ</a>
+                      <% } if (data2.stdU === 0){ %>
+                      <a style="color:blue">รอการอนุมัติ</a>
+                      <%  } if (data2.stdU === 2){ %>
+                      <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                      <% }  %>
+                    </h6>
+              </div>
+                  <div class="form-group">
+                      <label for="exampleFormControlTextarea1">ความเห็น</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  </div>
+            </div>
+          </div> 
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col border-block space-block">
+              <div class="space">
+                  <h6>สภานักศึกษา องค์กรนักศึกษา :
+                      <% if(data2.council === 1) {%>
+                      <a style="color:green">ผ่านการอนุมัติ</a>
+                      <% } if (data2.council === 0){ %>
+                      <a style="color:blue">รอการอนุมัติ</a>
+                      <%  } if (data2.council === 2){ %>
+                      <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                      <% }  %>
+                    </h6>
+              </div>
+              
+                  <div class="form-group">
+                      <label for="exampleFormControlTextarea1">ความเห็น</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  </div>
+            </div>
+            <div class="col border-block space-block">
+              <div class="space">
+                  <h6>หัวหน้างานกิจกรรมนักศึกษา:
+                      <% if(data2.affair === 1) {%>
+                      <a style="color:green">ผ่านการอนุมัติ</a>
+                      <% } if (data2.affair === 0){ %>
+                      <a style="color:blue">รอการอนุมัติ</a>
+                      <%  } if (data2.affair === 2){ %>
+                      <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                      <% }  %>
+                    </h6>
+              </div>
+                
+                  <div class="form-group">
+                      <label for="exampleFormControlTextarea1">ความเห็น</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  </div>
+            </div>
+          </div>
+        </div>
+
+          <div class="container">
+              <div class="row">
+                <div class="col border-block space-block">
+                  <div class="space">
+                      <h6>ผู้อำนวยการกองกิจการนักศึกษา :
+                          <% if(data2.director === 1) {%>
+                          <a style="color:green">ผ่านการอนุมัติ</a>
+                          <% } if (data2.director === 0){ %>
+                          <a style="color:blue">รอการอนุมัติ</a>
+                          <%  } if (data2.director === 2){ %>
+                          <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                          <% }  %>
+                        </h6>
+                  </div>
+                   
+                      <div class="form-group">
+                          <label for="exampleFormControlTextarea1">ความเห็น</label>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+                </div>
+                <div class="col border-block space-block">
+                  <div class="space">
+                      <h6>ผู้ช่วยอธิการบดีฝ่ายพัฒนานักศึกษา :
+                          <% if(data2.assistance_ch === 1) {%>
+                          <a style="color:green">ผ่านการอนุมัติ</a>
+                          <% } if (data2.assistance_ch === 0){ %>
+                          <a style="color:blue">รอการอนุมัติ</a>
+                          <%  } if (data2.assistance_ch === 2){ %>
+                          <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                          <% }  %>
+                        </h6>
+                  </div>
+                    
+                      <div class="form-group">
+                          <label for="exampleFormControlTextarea1">ความเห็น</label>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                  <div class="col border-block space-block">
+                    <div class="space">
+                        <h6>รองอธิการบดี :
+                            <% if(data2.vice_ch === 1) {%>
+                            <a style="color:green">ผ่านการอนุมัติ</a>
+                            <% } if (data2.vice_ch === 0){ %>
+                            <a style="color:blue">รอการอนุมัติ</a>
+                            <%  } if (data2.vice_ch === 2){ %>
+                            <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                            <% }  %>
+                          </h6>
+                    </div>
+                      
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">ความเห็น</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row border-block space-block">
+                  <div class="col space">
+                    
+                      <h6> สถานะโครงการ :
+                          <% if(data2.status) {%>
+                          <a class="btn btn-success">ผ่านการอนุมัติ</a>
+                          <% } else { %>
+                          <a class="btn btn-primary" style="color:white">รอการอนุมัติ</a>
+                          <% }  %>
+                        </h6>
+                    
+                  </div>
+                </div>
+              </div>
+      
+  </main>
+
+
+  <footer>
+    <% include ../partials/footer %>
+  </footer>
+
+</body>
+
+</html>

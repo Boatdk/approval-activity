@@ -2,12 +2,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Sample File Upload</title>
+    <title>Upload File</title>
 </head>
+<style>
+    div {
+        border: 1px solid;
+        display: table;
+        margin: 0px auto;
+        width: 200px;
+        padding: 20px;
+        margin-top: 300px;
+    }
+
+    .center-block {
+        margin-left:20px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+</style>
 <body>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
-    </form>
+    <div>
+            <form action="/api/file/create" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<%= data.id_activity%>">
+                <h4>Choose your File</h4>
+                <input type="file" name="file">
+                <input style="margin-top: 10px;"type="submit" value="Upload">
+            </form>
+    </div>
+   
 </body>
 </html>

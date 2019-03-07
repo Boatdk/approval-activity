@@ -5,14 +5,14 @@
   <% include ../partials/head %>
 </head>
 
-<body class="container">
+<body>
 
   <header>
     <% include ../partials/header %>
   </header>
 
   <main>
-    <div class="jumbotron">
+    <div class="jumbotron container space-showAll">
       <form action="/activity/update/updating" method="post">
       <h3>แก้ไขข้อมูลโครงการ</h3>
         <div class="row">
@@ -74,7 +74,7 @@
         </div>
         <input type="hidden" name="id_activity" value="<%= data.id_activity %>">
         <div>
-          <input type="submit" value="submit" class="btn btn-primary">
+          <input type="submit" value="update" class="btn btn-primary">
         </div>
 
       </form>

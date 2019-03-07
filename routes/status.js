@@ -30,7 +30,7 @@ router.route('/status/update')
         var sql = `UPDATE statusactivity set ${query.field}='${query.state}' WHERE id_activity='${query.id}'`
         doQuery(sql).then(resp => {
                 // res.json(resp)
-                res.redirect(`/activity/detail?id=${query.id}`)
+                res.redirect(`/activity/detail-Admin?id=${query.id}`)
             })
             .catch((err) => {
                 res.json({

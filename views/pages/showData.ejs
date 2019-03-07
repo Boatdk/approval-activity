@@ -5,87 +5,61 @@
   <% include ../partials/head %>
 </head>
 
-<body class="container">
+<body>
 
   <header>
-    <% include ../partials/header %>
+        <% include ../partials/header %>
   </header>
 
   <main>
-
-    <style>
-      table {
-              font-family: arial, sans-serif;
-              border-collapse: collapse;
-              width: 100%;
-          }
-          
-          td, th {
-              border: 1px solid #dddddd;
-              text-align: left;
-              padding: 8px;
-          }
-          
-          tr:nth-child(even) {
-              background-color: #dddddd;
-          }
-          </style>
-    <div class="jumbotron">
+    <div class="container space-showAll">
       <h2>Activity</h2>
       <p>สามารถเพิ่มโครงการได้ที่นี่ <a href='/activity/create'>add</a></p>
 
-      <table>
-        <thead class="thead-light">
-          <tr>
-            <th>id</th>
-            <th>ชื่อโครงการ</th>
-            <th>องค์กรจัดกิจกรรม</th>
-            <th>สถานะการจัดกิจกรรม</th>
-            <th>เริ่มจัดวันที่</th>
-            <th>สิ้นสุดวันที่</th>
-            <th>Tel</th>
-            <th>More</th>
-          </tr>
-        </thead>
-
-        <% data.forEach(function(Data) { %>
-        <tr>
-          <td>
-            <%= Data.id_activity %>
-          </td>
-          <td>
-            <%= Data.act_name %>
-          </td>
-          <td>
-            <%= Data.org_name%>
-          </td>
-          <td>
-            <% if(Data.samo) {%>
-            <i class="fas fa-check"></i>
-            <% } else { %>
-            <i class="fas fa-times"></i>
-            <% }  %>
-          </td>
-          <td>
-            <%= Data.act_start%>
-          </td>
-          <td>
-            <%= Data.act_end%>
-          </td>
-          <td>
-            <%= Data.tel %>
-          </td>
-          <td>
-            <form>
-              <button type="button" class="btn btn-info" onclick="window.location.href='/activity/detail?id=<%= Data.id_activity %>'">detail</button>
-            </form>
-          </td>
-
-        </tr>
-        <% }); %>
-      </table>
-
     </div>
+    <div class="container table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="thead-light">
+              <tr class="middle-text">
+                <th scope="col">ลำดับ</th>
+                <th scope="col" class="long">ชื่อโครงการ</th>
+                <th scope="col">องค์กรจัดกิจกรรม</th>
+                <th scope="col">สถานะ</th>
+                <th scope="col">เริ่ม</th>
+                <th scope="col">สิ้นสุด</th>
+                <th scope="col">เบอร์โทร</th>
+                <th scope="col">เพิ่มเติม</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(function(Data) { %>
+
+              <tr>
+                <th scope="row"><%= Data.id_activity %></th>
+                <td><%= Data.act_name %></td>
+                <td><%= Data.org_name%></td>
+                <% if(data2.adv === 1 && data2.vice_ch === 1 && data2.assistance_ch === 1 && data2.director === 1 && data2.affair === 1 && data2.council === 1 && data2.stdU === 1) {%>
+                <td style="text-align: center"><i class="fas fa-check"></i></td>
+                <% } else { %>
+                <td style="text-align: center"><i class="fas fa-times"></i></td>
+                <% }  %>
+                <td><%= Data.act_start%></td>
+                <td><%= Data.act_end%></td>
+                <td><%= Data.tel %></td>
+                <td><form>
+                   <%if(data3.type == 0) { %>
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/activity/detail?id=<%= Data.id_activity %>'">detail</button>
+                   <%} else {%>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='/activity/detail-Admin?id=<%= Data.id_activity %>'">detail</button>
+                    <% } %>
+                  </form></td>
+              </tr>
+            </tbody>
+            <% }); %>
+          </table>
+    
+    </div>
+    
   </main>
 
 

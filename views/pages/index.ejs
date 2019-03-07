@@ -5,15 +5,24 @@
 <head>
   <% include ../partials/head %>
 </head>
+<style>
+  .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+</style>
 
-<body class="container">
+<body>
 
   <header>
     <% include ../partials/header %>
   </header>
 
   <main>
-      <div class="jumbotron">
+      <div class="container jumbotron space-showAll">
         <h4> ● Check status and detail of activity </h4>
         <p> click  <a href="/activity">here</a></p> 
         <h4> ● Add an activity</h4> 
@@ -23,7 +32,10 @@
 
 
   <footer>
-    <% include ../partials/footer %>
+    <div class="footer">
+        <p class="text-center text-muted">© Copyright 2018</p>
+    </div>
+      
   </footer>
 
 </body>

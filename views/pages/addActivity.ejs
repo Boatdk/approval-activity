@@ -5,7 +5,7 @@
   <% include ../partials/head %>
 </head>
 
-<body class="container">
+<body>
 
   <header>
     <% include ../partials/header %>
@@ -13,7 +13,7 @@
 
 
   <main>
-    <div class="jumbotron">
+    <div class="jumbotron container space-showAll">
       <form action="/activity/create/creating" method="post">
         <h3>เพิ่มโครงการ</h3>
         
@@ -72,10 +72,9 @@
           </div>
         </div>
         <div>
-          <input type="submit" value="submit" class="btn btn-primary"> 
-          <button type="button" class="btn btn-info" onclick="window.location.href='/activity/detail/upload'">upload</button>
+          <input type="submit" value="submit" class="btn btn-primary">
         </div>
-
+        
       </form>
 
 

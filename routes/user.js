@@ -12,7 +12,18 @@ router.route('/user')
     if (!!query.id) {
       sql = `SELECT * FROM user WHERE id_user='${query.id}'`
     }
-    doQuery(sql).then(resp => res.json(resp))
+    doQuery(sql).then(resp => {
+      if(resp){
+        res.json({
+          message: resp
+        })
+      }
+      else{
+        res.json({
+          message: 'Invalid User'
+        })
+      }
+    })
       .catch((err) => {
         message : err
       })
@@ -87,7 +98,7 @@ router.route('/user/:id')
         let sql = `INSERT INTO user(firstname, lastname, password, email, tel, type)
                   VALUES ('${body.firstname}', '${
                   body.lastname}', SHA1('${body.password}'), 
-                  '${body.email}', '${body.tel}', '${body.type}')`;
+                  '${body.email}', '${body.tel}', 0)`;
         doQuery(sql).then(resp => {
           res.json({
             message: 'added success',

@@ -1,5 +1,6 @@
 const axios = require('axios')
 var localhost = `http://localhost:7777/api/activity`
+var ip = 'http://128.199.241.168:7777'
 module.exports = {
     getActivity(id){
         let url

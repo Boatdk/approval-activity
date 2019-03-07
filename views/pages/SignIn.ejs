@@ -136,7 +136,9 @@ margin-left: 4px;
 			</div>
 			<%}else{%>
 				<div class="card-body">	
-						<a style="color:white"><%=data.message%></a>
+						<div class="alert alert-danger">
+								<%= data.message %>
+						</div>						
 						<form action="/activity" method="post" class="space">
 							<div class="input-group form-group">
 								<div class="input-group-prepend">

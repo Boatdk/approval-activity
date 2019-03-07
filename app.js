@@ -10,6 +10,7 @@ var getUser = require('./api/user').getUser
 var putActivity = require('./api/activity').putActivity
 const doQuery = require('./utils/doQuery')
 var session = require('express-session')
+var login = true
 
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 },
    resave : false, saveUninitialized: false }))
@@ -38,12 +39,13 @@ app.get('/activity/file', (req, res) => {
 })
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
+      login = true
       res.redirect('/')
     })
 })
 
 
-var login = true
+
 app.post('/activity', (req, res) => {
   return getUser().then((resp)=>{
     let body = req.body

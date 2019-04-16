@@ -11,6 +11,7 @@ var putActivity = require('./api/activity').putActivity
 const doQuery = require('./utils/doQuery')
 var session = require('express-session')
 var login = true
+var axios = require('axios')
 
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 },
    resave : false, saveUninitialized: false }))

@@ -160,6 +160,9 @@ app.get('/index', (req, res) => {
 ///////////////////////////////////// GET ACTIVITY PAGE ////////////////////////////////////////////////////
 app.get('/activity', (req, res) => {
   var data3 = session.data3
+  console.log("data3:" + data3)
+  console.log("sess"+ session.email)
+  console.log("req"+ req.session.email)
   var sql0 = `SELECT * FROM activity`
   doQuery(sql0).then((resp) => {
     var sql = `SELECT * FROM statusactivity`

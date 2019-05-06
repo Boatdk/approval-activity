@@ -197,7 +197,8 @@ app.get('/activity', (req, res) => {
 //////////////////////////////////////// ACTIVITY /////////////////////////////////////////////////////
 app.get('/activity/create', (req, res) => {
   var data3 = session.data3 ? session.data3: req.session.data3
-  doQuery(`SELECT * FROM user WHERE email='${email}'`).then(user=>{
+  const email = session.email ? session.email: req.session.email
+  doQuery(`SELECT * FROM user WHERE email='${email? email:data3.email}'`).then(user=>{
     if(user.length > 0){
       return res.render('pages/addActivity', {data3,user:user[0]})
     }

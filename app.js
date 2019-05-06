@@ -206,7 +206,6 @@ app.get('/user', (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////// ADMIN ////////////////////////////////////////////////////////
 app.get('/activity/detail-Admin', (req, res) => {
-
   const query = req.query
   if (session.email) {
     if (query.id) {
@@ -216,10 +215,19 @@ app.get('/activity/detail-Admin', (req, res) => {
         doQuery(sql).then(status => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
           doQuery(sql2).then((data) => {
-            doQuery(`SELECT * FROM user WHERE email='${session.email}'`).then(user => {
-              const data3 = session.data3 ? session.data3: req.session.data3
-              console.log("data:" + data3)
-              console.log("user:" + user)
+            const email = session.email ? session.email: req.session.email
+            doQuery(`SELECT * FROM user WHERE email='${email}'`).then(user => {
+              let data3
+              if(user.length > 0){
+                data3 = {
+                  email: user[0].email,
+                  firstname: user[0].firstname,
+                  type: user[0].type
+                }
+              }
+              else{
+                 data3 = session.data3 ? session.data3: req.session.data3
+              }
               return res.render('dataID-Admin', {
                 data: resp[0],
                 data2: status[0],

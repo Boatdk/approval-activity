@@ -215,6 +215,8 @@ app.get('/activity/detail-Admin', (req, res) => {
           doQuery(sql2).then((data) => {
             doQuery(`SELECT * FROM user WHERE email='${session.email}'`).then(user => {
               const data3 = session.data3 ? session.data3: req.session.data3
+              console.log("data:" + data3)
+              console.log("user:" + user)
               return res.render('dataID-Admin', {
                 data: resp[0],
                 data2: status[0],

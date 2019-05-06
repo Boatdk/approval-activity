@@ -279,9 +279,9 @@ app.get('/activity/detail', (req, res) => {
 //////////////////////////////////// UPDATE DATA ////////////////////////////////////////////////////////
 app.get('/activity/update', (req, res) => {
   const query = req.query
+  var data3 = session.data3 ? session.data3: req.session.data3
   if (query.id) {
     doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
-      var data3 = session.data3
       res.render('pages/putActivity', {
         data: resp[0],
         data3

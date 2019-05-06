@@ -211,12 +211,19 @@ app.get('/activity/detail-Admin', (req, res) => {
         doQuery(sql).then(status => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
           doQuery(sql2).then((data) => {
-            //console.log(data[0].path)
-            return res.render('dataID-Admin', {
-              data: resp[0],
-              data2: status[0],
-              filepath: data[0].path
-            })
+            doQuery(`SELECT * FROM user WHERE email='${req.session.email}'`).then(user => {
+              var data3 = {
+                email: user[0].email,
+                firstname: user[0].firstname,
+                type: user[0].type
+              }
+              return res.render('dataID-Admin', {
+                data: resp[0],
+                data2: status[0],
+                filepath: data[0].path,
+                data3
+              })
+            })   
           })
         })
       })

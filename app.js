@@ -154,7 +154,7 @@ app.get('/', (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/index', (req, res) => {
-  var data3 = req.session.data3
+  var data3 = session.data3
   return res.render('pages/index', {data3})
 })
 
@@ -242,7 +242,7 @@ app.get('/activity/detail', (req, res) => {
       var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
       
       doQuery(sql).then(status => {
-        var data3 = req.session.data3
+        var data3 = session.data3
         res.render('dataID-user', {
           data: resp[0],
           data2: status[0],
@@ -261,7 +261,7 @@ app.get('/activity/update', (req, res) => {
   const query = req.query
   if (query.id) {
     doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
-      var data3 = req.session.data3
+      var data3 = session.data3
       res.render('pages/putActivity', {
         data: resp[0],
         data3

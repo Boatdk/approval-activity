@@ -235,16 +235,16 @@ app.get('/activity/detail-Admin', (req, res) => {
             doQuery(`SELECT * FROM user WHERE email='${email}'`).then(user => {
               let data3
               let file = ''
-              if(user.length > 0){
-                data3 = {
-                  email: user[0].email,
-                  firstname: user[0].firstname,
-                  type: user[0].type
-                }
-              }
-              else{
+              // if(user.length > 0){
+              //   data3 = {
+              //     email: user[0].email,
+              //     firstname: user[0].firstname,
+              //     type: user[0].type
+              //   }
+              // }
+              
                  data3 = session.data3 ? session.data3: req.session.data3
-              }
+              
 
               if(data.length > 0){
                 file = data[0].path

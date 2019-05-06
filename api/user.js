@@ -4,9 +4,9 @@ module.exports = {
     getUser(id){
         let url
         if (id) {
-            url = `http://localhost:7777/api/user/${id}`
+            url = `http://128.199.147.194:7777/api/user/${id}`
         }else {
-            url = `http://localhost:7777/api/user`
+            url = `http://128.199.147.194:7777/api/user`
         }
     return axios
       .get(url)
@@ -14,7 +14,7 @@ module.exports = {
       .catch(error => console.log(error))
     },
     postUser(body){
-        return axios.post('http://localhost:7777/api/user', body)
+        return axios.post('http://128.199.147.194:7777/api/user', body)
       .then((resp) => {
         // console.log(resp.data[0])
         return resp.data

@@ -5,9 +5,9 @@ module.exports = {
     getActivity(id){
         let url
         if (id) {
-            url = `http://localhost:7777/api/activity/${id}`
+            url = `http://128.199.147.194:7777/api/activity/${id}`
         }else {
-            url = `http://localhost:7777/api/activity`
+            url = `http://128.199.147.194:7777/api/activity`
         }
     return axios
       .get(url)
@@ -15,14 +15,14 @@ module.exports = {
       .catch(error => console.log(error))
     },
     postActivity(body){
-        return axios.post('http://localhost:7777/api/activity', body)
+        return axios.post('http://128.199.147.194:7777/api/activity', body)
       .then((resp) => {
         return resp.data
       })
       .catch(error => console.log(error))
     },
     putActivity(body,id){
-        return axios.put('http://localhost:7777/api/activity/${id}', body)
+        return axios.put('http://128.199.147.194:7777/activity/${id}', body)
       .then((resp) => {
         return resp.data
       })

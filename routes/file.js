@@ -53,11 +53,12 @@ router
     console.log(req.file.filename)
     let sql = `INSERT INTO fileactivity(filename, path, id_activity, mimetype) VALUES ('${req.file.filename}', '${pathfile}', '${body.id}', '${req.file.mimetype}')`
     doQuery(sql).then((resp) => {
-      res.json({
-        message: 'success',
-        resp: resp,
-        data: req.file
-      })
+      res.redirect('/activity')
+      // res.json({
+      //   message: 'success',
+      //   resp: resp,
+      //   data: req.file
+      // })
     })
   })
 

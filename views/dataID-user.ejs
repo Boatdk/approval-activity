@@ -71,8 +71,9 @@
         <div class="right-top">
           <% if ( data.id_user === data3.id_user) {%>
             <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/activity/update?id=<%= data.id_activity %>'">edit</button>
-          <%}%>
             <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/activity/file?id=<%= data.id_activity %>'">upload</button>
+          <%}%>
+            
         </div>
       
     </div>
@@ -179,10 +180,10 @@
                         </h6>
                   </div>
                    
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                           <label for="exampleFormControlTextarea1">ความเห็น</label>
                           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      </div>
+                      </div> -->
                 </div>
                 <div class="col border-block space-block">
                   <div class="space">

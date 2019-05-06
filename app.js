@@ -80,9 +80,6 @@ app.post('/activity', (req, res) => {
   doQuery(sql).then((value) => {
     if (value[0]) {
       console.log(value)
-      if (body.email != value[0].email) {
-
-      }
       var trust = sha1(body.password)
       if (body.email == value[0].email && trust == value[0].password) {
         var data3 = {
@@ -114,6 +111,15 @@ app.post('/activity', (req, res) => {
               data3
             })
           })
+        })
+      }else{
+        login = false
+        var data = {
+          message: 'Wrong email or passwords'
+        }
+        return res.render('pages/LoginV2', {
+          login,
+          data
         })
       }
     }
@@ -206,7 +212,7 @@ app.get('/activity/detail-Admin', (req, res) => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
           doQuery(sql2).then((data) => {
             //console.log(data[0].path)
-            return res.render('pages/dataID-Admin', {
+            return res.render('dataID-Admin', {
               data: resp[0],
               data2: status[0],
               filepath: data[0].path
@@ -227,7 +233,7 @@ app.get('/activity/detail', (req, res) => {
     doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
       var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
       doQuery(sql).then(status => {
-        res.render('pages/dataID-user', {
+        res.render('dataID-user', {
           data: resp[0],
           data2: status[0]
         })

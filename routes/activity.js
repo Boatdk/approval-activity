@@ -34,7 +34,8 @@ router.route('/activity')
         console.log({
           message: 'added success'
         })
-        sendEmails()
+        const url = `http://128.199.147.194:7777/activity/detail-Admin?id=${resp.insertId}`
+        sendEmails(url)
         res.redirect('/activity')
         
       })

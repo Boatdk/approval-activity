@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-async function sendMails(){
+async function sendMails(url){
   console.log('Sending message...');
   let transporter = nodemailer.createTransport(
     {
@@ -35,7 +35,7 @@ let message = {
 
   // HTML body
   html:`<h2>Students create new activty.Lets check in website</h2>
-  <p>pls confirm: this link <br/><img src="cid:nyan@example.com"/></p>,`
+  <p>Plaes confirm: this link <a href="${url}">CLICK</a><br/><img src="cid:nyan@example.com"/></p>,`
       
 
 };

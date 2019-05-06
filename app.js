@@ -196,8 +196,8 @@ app.get('/activity/detail-Admin', (req, res) => {
         doQuery(sql).then(status => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
           doQuery(sql2).then((data) => {
-            console.log(data[0].path)
-            res.render('pages/dataID-Admin', {
+            //console.log(data[0].path)
+            return res.render('pages/dataID-Admin', {
               data: resp[0],
               data2: status[0],
               filepath: data[0].path
@@ -206,7 +206,7 @@ app.get('/activity/detail-Admin', (req, res) => {
         })
       })
     } else {
-      res.redirect('/activity')
+      return res.redirect('/activity')
     }
   }
 })

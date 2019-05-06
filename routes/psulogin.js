@@ -5,6 +5,10 @@ const soap = require('soap');
 const url = 'https://passport.psu.ac.th/authentication/authentication.asmx?wsdl';
 const axios = require('axios')
 var session = require('express-session')
+const postUser = 'http://localhost:7777/api/user'
+
+
+
 router.route('/psulogin')
   .post((req, res) => {
     soap.createClient(url, (err, client) => {
@@ -26,17 +30,18 @@ router.route('/psulogin')
               if (user.length < 1) {
                 ///create user
                 const uCreate= {
+                  firstname:  `${response.GetStaffDetailsResult.string[1]}`,
+                  lastname:   `${response.GetStaffDetailsResult.string[2]}`,
                   email: `${response.GetStaffDetailsResult.string[0]}@psu.ac.th`,
-                  password:'12345',
-                  firstname:  `${response.GetStaffDetailsResult.string[1]}'`,
-                  lastname:   `${response.GetStaffDetailsResult.string[2]}'`,
+                  password:'12345678',
+                  tel: '0',
+                  tpye: 0
+                  
                 }
-                postUser(uCreate).then((resp) => {
-                  res.json({
-                    message: 'add new account'
-                  })
-                  res.redirect('/psulogin')
-                })
+                const add = await axios.post(postUser,uCreate)
+                console.log(add)
+                res.redirect('/psulogin')
+                
                //POST DATABASE
               }
               console.log(user.length > 0 && user[0].email == `${response.GetStaffDetailsResult.string[0]}@psu.ac.th`)

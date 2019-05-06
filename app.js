@@ -16,6 +16,7 @@ const sendMails = require('./utils/email')
 sha1 = require('js-sha1');
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 
 
@@ -121,9 +122,6 @@ app.get('/psulogin', (req, res) => {
   res.render('pages/loginPSU')
 })
 
-app.post('/psulogin', (req, res) => {
-
-})
 //////////////////////////////////LOGIN PAGES//////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
   return getUser().then((resp) => {
@@ -192,17 +190,23 @@ app.get('/activity/detail-Admin', (req, res) => {
       return getActivity(query.id).then((resp) => {
         var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
         doQuery(sql).then(status => {
-          res.render('pages/dataID-Admin', {
-            data: resp[0],
-            data2: status[0]
+          var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
+            doQuery(sql2).then((data) => {
+              console.log(data[0].path)
+              res.render('pages/dataID-Admin', {
+                data: resp[0],
+                data2: status[0],
+                filepath: data[0].path
+              })
+            })
           })
         })
-      })
     } else {
       res.redirect('/activity')
     }
   }
 })
+
 ////////////////////////////////////////// USER //////////////////////////////////////////////////////
 app.get('/activity/detail', (req, res) => {
   const query = req.query
@@ -244,6 +248,17 @@ app.post('/activity/update/updating', (req, res) => {
   })
 })
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// app.get('/activity/file/dowload', (req, res) => {
+//   const query = req.query
+//   if(query.id) {
+//     var sql = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
+//     doQuery(sql).then((resp) => {
+//       console.log(resp)
+//       const newpath = resp.path
+//       res.redirect('localhost:7777/uploads/${newpath}')
+//     })
+//   }
+// })
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')

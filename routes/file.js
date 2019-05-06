@@ -16,8 +16,8 @@ const cleanFolder = function (folderPath, filename) {
 }
 
 const imageFilter = function (req, file, cb) {
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return cb(new Error('Only image file are allowed'), false)
+  if (!file.originalname.match(/\.(pdf)$/)) {
+    return cb(new Error('Only pdf file are allowed'), false)
   }
   cb(null, true)
 }
@@ -44,12 +44,14 @@ const upload = multer({
 const time = Date.now()
 var type = upload.single('file')
 router
-  .route('/file/create')
+  .route('/file')
 
   .post(type, (req, res) => {
     var body = req.body
+    const pathfile = `uploads/${req.file.filename}` 
     console.log(req.file)
-    let sql = `INSERT INTO fileactivity(filename, path, id_activity) VALUES ('${req.file.filename}', '${req.file.path}', '${body.id}')`
+    console.log(req.file.filename)
+    let sql = `INSERT INTO fileactivity(filename, path, id_activity, mimetype) VALUES ('${req.file.filename}', '${pathfile}', '${body.id}', '${req.file.mimetype}')`
     doQuery(sql).then((resp) => {
       res.json({
         message: 'success',
@@ -60,18 +62,20 @@ router
   })
 
   .get((req, res) => {
-    let sql = `SELECT * FROM fileactivity`
-    doQuery(sql).then((resp) => res.json(resp))
+      let sql = `SELECT * FROM fileactivity`
+      doQuery(sql).then((resp) => res.json(resp))
+ 
+    
   })
 
 
 
 router
-  .route('/images/delete')
+  .route('/file/delete')
 
   .post((req, res) => {
     const body = req.body
-    let sql = `SELECT * FROM images WHERE id='${body.id}'`
+    let sql = `SELECT * FROM fileactivity WHERE id='${body.id}'`
     doQuery(sql).then((resp) => {
       let state = false
       console.log(resp)
@@ -125,5 +129,19 @@ router
     })
 
   })
+
+  router.route('/file/:activity_id')
+    
+    .get((req, res) => {
+      const params = req.params
+      const activity_id = params.activity_id
+      if(activity_id){
+        const sql = `SELECT * FROM fileactivity WHERE id_activity='${activity_id}'`
+        doQuery(sql).then((resp) => {
+          res.json(resp)
+        })
+      }
+    })
+
   
 module.exports = router

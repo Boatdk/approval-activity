@@ -47,11 +47,12 @@ router.route('/psulogin')
               console.log(user.length > 0 && user[0].email == `${response.GetStaffDetailsResult.string[0]}@psu.ac.th`)
               if (user.length > 0 && user[0].email == `${response.GetStaffDetailsResult.string[0]}@psu.ac.th`) {
                 data3 = {
-                  email: user[0].emai,
+                  email: user[0].email,
                   firstname: user[0].firstname,
                   type: user[0].type
                 }
-                session.email = user[0].emai
+                session.email = user[0].email
+                session.data3 = data3
                 return res.redirect('/activity')
               }
             }

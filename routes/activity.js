@@ -22,21 +22,6 @@ router.route('/activity')
 
   })
 
-router.route('/activity/:id')
-
-  .get((req, res) => {
-    const params = req.params
-    var sql = `SELECT * FROM activity WHERE id_activity='${params.id}'`
-    doQuery(sql).then(resp => res.json(resp))
-      .catch((err) => {
-        res.json({
-          message: err
-        })
-      })
-  })
-
-router.route('/activity/create')
-
   .post((req, res) => {
     var body = req.body
     console.log(body)
@@ -57,7 +42,8 @@ router.route('/activity/create')
           message: 'added id_activity with file success'
         })
       })
-    }).catch((err) => {
+    })
+    .catch((err) => {
       res.json({
         message: err
       })
@@ -65,9 +51,20 @@ router.route('/activity/create')
 
   })
 
-router.route('/activity/update')
+router.route('/activity/:id')
 
-  .post((req, res) => {
+  .get((req, res) => {
+    const params = req.params
+    var sql = `SELECT * FROM activity WHERE id_activity='${params.id}'`
+    doQuery(sql).then(resp => res.json(resp))
+      .catch((err) => {
+        res.json({
+          message: err
+        })
+      })
+  })
+
+  .put((req, res) => {
     var body = req.body
     var query = req.query
     var sql = `UPDATE activity SET org_name = '${body.org_name}', book_num = '${body.book_num}', act_name = '${body.act_name}', dear_to = '${body.dear_to}', act_money='${body.act_money}',

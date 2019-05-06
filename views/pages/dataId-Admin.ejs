@@ -12,272 +12,373 @@
   </header>
 
 
-  <main> 
+  <main>
     <div class="container" style="margin-top:90px ">
-        <h2 align="center">ข้อมูลโครงการ</h2>
+      <h2 align="center">ข้อมูลโครงการ</h2>
     </div>
     <div class="container space border-block">
-        <div class="container">
-            <div class="row">
-              <div class="col space-block space">
-                  <div>
-                      <h5>องค์กรจัดกิจกรรม : <%= data.org_name %> </h5> 
-                  </div>
-                
-              </div>
-              <div class="col space-block space">
-                <h5> ชื่อกิจกรรม : <%= data.act_name %></h5>
-              </div>
+      <div class="container">
+        <div class="row">
+          <div class="col space-block space">
+            <div>
+              <h5>องค์กรจัดกิจกรรม : <%= data.org_name %> </h5>
             </div>
+
           </div>
-        <div class="container">
-              <div class="row">
-                <div class="col space-block">
-                  <h5>เรียนถึง : <%= data.dear_to %></h5>
-                </div>
-              </div>
-        </div>
-        <div class="container">
-            <div class="row">
-              <div class="col space-block">
-                  <h5>จัดกิจกรรมระหว่างวันที่ : <%= data.act_start %> ถึง  <%= data.act_end %></h5>
-              </div>
-              </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col space-block">
-                <h5>ใช้งบประมาณจาก :  <%= data.mn_from %></h5>
-            </div>
-            <div class="col space-block">
-                <h5>จำนวน : <%= data.act_money %></h5>
-            </div>
+          <div class="col space-block space">
+            <h5> ชื่อกิจกรรม : <%= data.act_name %></h5>
           </div>
         </div>
-        <div class="container">
-          <div class="row">
-            <div class="col space-block">
-              <h5>จำชวนชั่วโมงกิจกรรม:
-                  <%= data.act_hours %></h5>
-                
-            </div>
-            <div class="col space-block">
-                <h5>เบอร์โทรติดต่อ:
-                    <%= data.tel %>
-                </h5>
-            </div> 
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col space-block">
+            <h5>เรียนถึง : <%= data.dear_to %></h5>
           </div>
         </div>
-        <div class="right-top">
-            <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/activity/update?id=<%= data.id_activity %>'">edit</button>
-            <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/activity/file?id=<%= data.id_activity %>'">upload</button>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col space-block">
+            <h5>จัดกิจกรรมระหว่างวันที่ : <%= data.act_start %> ถึง <%= data.act_end %></h5>
+          </div>
         </div>
-      
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col space-block">
+            <h5>ใช้งบประมาณจาก : <%= data.mn_from %></h5>
+          </div>
+          <div class="col space-block">
+            <h5>จำนวน : <%= data.act_money %></h5>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col space-block">
+            <h5>จำชวนชั่วโมงกิจกรรม:
+              <%= data.act_hours %></h5>
+
+          </div>
+          <div class="col space-block">
+            <h5>เบอร์โทรติดต่อ:
+              <%= data.tel %>
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="right-top">
+        <button type="button" class="btn btn-primary btn-sm"
+          onclick="window.location.href='/activity/update?id=<%= data.id_activity %>'">edit</button>
+        <button type="button" class="btn btn-primary btn-sm"
+          onclick="window.location.href='/activity/file?id=<%= data.id_activity %>'">upload</button>
+      </div>
+
     </div>
 
+    
+      <div class="container " style="margin-top:20px ">
+        <h2 align="center">สถานะการดำเนินโครงการ</h2>
+      </div>
+      <div class="container space">
+        <div class="row">
+          <div class="col border-block space-block">
+            <div class="space">
+              <h6>อาจารย์ที่ปรึกษา :
+                <% if(data2.adv === 1) {%>
+                <a style="color:green">ผ่านการอนุมัติ</a>
+                <% if(data3.type > 0) {%>
+                <a class="btn btn-warning btn-sm"
+                  href="/api/status/update?field=adv&state=0&id=<%= data2.id_activity %>">holding</a>
+                <% }  %>
+                <% } if (data2.adv === 0){ %>
+                <a style="color:blue">รอการอนุมัติ</a>
+                <% if(data3.type > 0) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=adv&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <%  } if (data2.adv === 2){ %>
+                <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                <% if(data3.type > 0) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=adv&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <% }  %>
+                <% if(data3.type > 0) {%>
+                <a class="btn btn-danger btn-sm"
+                  href="/api/status/update?field=adv&state=2&id=<%= data2.id_activity %>">reject</a>
+                <% }  %>
+              </h6>
+            </div>
+            <% if(data3.type > 0 ) {%>
+            <div class="form-group">
+              <form>
+                <label for="exampleFormControlTextarea1">ความเห็น</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white">submit</a>
+              </form>
+            </div>
+            <% }  %>
+          </div>
+          <div class="col border-block space-block">
+            <div class="space">
+              <h6>องค์การบริหาร องค์การนักศึกษา :
+
+                <% if(data2.stdU === 1) {%>
+                <a style="color:green">ผ่านการอนุมัติ</a>
+                <% if(data3.type > 1 ) {%>
+                <a class="btn btn-warning btn-sm"
+                  href="/api/status/update?field=stdU&state=0&id=<%= data2.id_activity %>">holding</a>
+                <% }  %>
+                <% } if (data2.stdU === 0){ %>
+                <a style="color:blue">รอการอนุมัติ</a>
+                <% if(data3.type > 1 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=stdU&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <%  } if (data2.stdU === 2){ %>
+                <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                <% if(data3.type > 1 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=stdU&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <% }  %>
+                <% if(data3.type > 1 ) {%>
+                <a class="btn btn-danger btn-sm"
+                  href="/api/status/update?field=stdU&state=2&id=<%= data2.id_activity %>">reject</a>
+                <% }  %>
+              </h6>
+            </div>
+            <% if(data3.type > 1 ) {%>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">ความเห็น</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white">submit</a>
+            </div>
+            <% }  %>
+          </div>
+        </div>
+      </div>
+
       <div class="container">
-          <div class="container " style="margin-top:20px ">
-              <h2 align="center">สถานะการดำเนินโครงการ</h2>
+        <div class="row">
+          <div class="col border-block space-block">
+            <div class="space">
+              <h6>สภานักศึกษา องค์กรนักศึกษา :
+                <% if(data2.council === 1) {%>
+                <a style="color:green">ผ่านการอนุมัติ</a>
+                <% if(data3.type > 2 ) {%>
+                <a class="btn btn-warning btn-sm"
+                  href="/api/status/update?field=council&state=0&id=<%= data2.id_activity %>">holding</a>
+                <% }  %>
+                <% } if (data2.council === 0){ %>
+                <a style="color:blue">รอการอนุมัติ</a>
+                <% if(data3.type > 2 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=council&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <%  } if (data2.council === 2){ %>
+                <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                <% if(data3.type > 2 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=council&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <% }  %>
+                <% if(data3.type > 2 ) {%>
+                <a class="btn btn-danger btn-sm"
+                  href="/api/status/update?field=council&state=2&id=<%= data2.id_activity %>">reject</a>
+                <% }  %>
+              </h6>
+            </div>
+            <% if(data3.type > 2 ) {%>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">ความเห็น</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white">submit</a>
+            </div>
+            <% }  %>
           </div>
-        <div class="container space">
-          <div class="row">
-            <div class="col border-block space-block">
-              <div class="space">
-                  <h6>อาจารย์ที่ปรึกษา : 
-                      <% if(data2.adv === 1) {%>
-                      <a style="color:green">ผ่านการอนุมัติ</a> 
-                      <a class="btn btn-warning btn-sm" href="/api/status/update?field=adv&state=0&id=<%= data2.id_activity %>">holding</a>
-                      <% } if (data2.adv === 0){ %>
-                      <a style="color:blue">รอการอนุมัติ</a>
-                      <a class="btn btn-success btn-sm" href="/api/status/update?field=adv&state=1&id=<%= data2.id_activity %>">approve</a>
-                      <%  } if (data2.adv === 2){ %>
-                      <a style="color:red">ไม่ผ่านการอนุมัติ</a>
-                      <a class="btn btn-success btn-sm" href="/api/status/update?field=adv&state=1&id=<%= data2.id_activity %>">approve</a>
-                      <% }  %>
-                      <a class="btn btn-danger btn-sm" href="/api/status/update?field=adv&state=2&id=<%= data2.id_activity %>">reject</a>
-                    </h6>
-              </div>
-                
-                  <div class="form-group">
-                    <form>
-                        <label for="exampleFormControlTextarea1">ความเห็น</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white" >submit</a>
-                    </form> 
-                  </div>
+          <div class="col border-block space-block">
+            <div class="space">
+              <h6>หัวหน้างานกิจกรรมนักศึกษา:
+                <% if(data2.affair === 1) {%>
+                <a style="color:green">ผ่านการอนุมัติ</a>
+                <% if(data3.type > 3 ) {%>
+                <a class="btn btn-warning btn-sm"
+                  href="/api/status/update?field=affair&state=0&id=<%= data2.id_activity %>">holding</a>
+                <% }  %>
+                <% } if (data2.affair === 0){ %>
+                <a style="color:blue">รอการอนุมัติ</a>
+                <% if(data3.type > 3 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=affair&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <%  } if (data2.affair === 2){ %>
+                <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                <% if(data3.type > 3 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=affair&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <% }  %>
+                <% if(data3.type > 3 ) {%>
+                <a class="btn btn-danger btn-sm"
+                  href="/api/status/update?field=affair&state=2&id=<%= data2.id_activity %>">reject</a>
+                <% }  %>
+              </h6>
             </div>
-            <div class="col border-block space-block">
-              <div class="space">
-                  <h6>องค์การบริหาร องค์การนักศึกษา :
-                    
-                      <% if(data2.stdU === 1) {%>
-                      <a style="color:green">ผ่านการอนุมัติ</a>
-                    <a class="btn btn-warning btn-sm" href="/api/status/update?field=stdU&state=0&id=<%= data2.id_activity %>">holding</a>
-                      <% } if (data2.stdU === 0){ %>
-                      <a style="color:blue">รอการอนุมัติ</a>
-                     <a class="btn btn-success btn-sm" href="/api/status/update?field=stdU&state=1&id=<%= data2.id_activity %>">approve</a>
-                      <%  } if (data2.stdU === 2){ %>
-                      <a style="color:red">ไม่ผ่านการอนุมัติ</a>
-                      <a class="btn btn-success btn-sm" href="/api/status/update?field=stdU&state=1&id=<%= data2.id_activity %>">approve</a>
-                      <% }  %>
-                      <a class="btn btn-danger btn-sm" href="/api/status/update?field=stdU&state=2&id=<%= data2.id_activity %>">reject</a>
-                    </h6>
-              </div>
-                  <div class="form-group">
-                      <label for="exampleFormControlTextarea1">ความเห็น</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white">submit</a>
-                  </div>
+            <% if(data3.type > 3 ) {%>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">ความเห็น</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <a class="btn btn-primary btn-sm right-block-left button-cm " style="color:white">submit</a>
             </div>
-          </div> 
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col border-block space-block">
-              <div class="space">
-                  <h6>สภานักศึกษา องค์กรนักศึกษา :
-                      <% if(data2.council === 1) {%>
-                      <a style="color:green">ผ่านการอนุมัติ</a>
-                      <a class="btn btn-warning btn-sm" href="/api/status/update?field=council&state=0&id=<%= data2.id_activity %>">holding</a>
-                      <% } if (data2.council === 0){ %>
-                      <a style="color:blue">รอการอนุมัติ</a>
-                      <a class="btn btn-success btn-sm" href="/api/status/update?field=council&state=1&id=<%= data2.id_activity %>">approve</a>
-                      <%  } if (data2.council === 2){ %>
-                      <a style="color:red">ไม่ผ่านการอนุมัติ</a>
-                      <a class="btn btn-success btn-sm" href="/api/status/update?field=council&state=1&id=<%= data2.id_activity %>">approve</a>
-                      <% }  %>
-                      <a class="btn btn-danger btn-sm" href="/api/status/update?field=council&state=2&id=<%= data2.id_activity %>">reject</a>
-                    </h6>
-              </div>
-              
-                  <div class="form-group">
-                      <label for="exampleFormControlTextarea1">ความเห็น</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white">submit</a>
-                  </div>
-            </div>
-            <div class="col border-block space-block">
-              <div class="space">
-                  <h6>หัวหน้างานกิจกรรมนักศึกษา:
-                      <% if(data2.affair === 1) {%>
-                      <a style="color:green">ผ่านการอนุมัติ</a>
-                      <a class="btn btn-warning btn-sm" href="/api/status/update?field=affair&state=0&id=<%= data2.id_activity %>">holding</a>
-                      <% } if (data2.affair === 0){ %>
-                      <a style="color:blue">รอการอนุมัติ</a>
-                      <a class="btn btn-success btn-sm" href="/api/status/update?field=affair&state=1&id=<%= data2.id_activity %>">approve</a>
-                      <%  } if (data2.affair === 2){ %>
-                      <a style="color:red">ไม่ผ่านการอนุมัติ</a>
-                      <a class="btn btn-success btn-sm" href="/api/status/update?field=affair&state=1&id=<%= data2.id_activity %>">approve</a>
-                      <% }  %>
-                      <a class="btn btn-danger btn-sm" href="/api/status/update?field=affair&state=2&id=<%= data2.id_activity %>">reject</a>
-                    </h6>
-              </div>
-                
-                  <div class="form-group">
-                      <label for="exampleFormControlTextarea1">ความเห็น</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      <a class="btn btn-primary btn-sm right-block-left button-cm " style="color:white">submit</a>
-                  </div>
-            </div>
+            <% }  %>
           </div>
         </div>
+      </div>
 
-          <div class="container">
-              <div class="row">
-                <div class="col border-block space-block">
-                  <div class="space">
-                      <h6>ผู้อำนวยการกองกิจการนักศึกษา :
-                          <% if(data2.director === 1) {%>
-                          <a style="color:green">ผ่านการอนุมัติ</a>
-                          <a class="btn btn-warning btn-sm" href="/api/status/update?field=director&state=0&id=<%= data2.id_activity %>">holding</a>
-                          <% } if (data2.director === 0){ %>
-                          <a style="color:blue">รอการอนุมัติ</a>
-                          <a class="btn btn-success btn-sm" href="/api/status/update?field=director&state=1&id=<%= data2.id_activity %>">approve</a>
-                          <%  } if (data2.director === 2){ %>
-                          <a style="color:red">ไม่ผ่านการอนุมัติ</a>
-                          <a class="btn btn-success btn-sm" href="/api/status/update?field=director&state=1&id=<%= data2.id_activity %>">approve</a>
-                          <% }  %>
-                          <a class="btn btn-danger btn-sm" href="/api/status/update?field=director&state=2&id=<%= data2.id_activity %>">reject</a>
-                        </h6>
-                  </div>
-                   
-                      <div class="form-group">
-                          <label for="exampleFormControlTextarea1">ความเห็น</label>
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                          <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white" >submit</a>
-                      </div>
-                </div>
-                <div class="col border-block space-block">
-                  <div class="space">
-                      <h6>ผู้ช่วยอธิการบดีฝ่ายพัฒนานักศึกษา :
-                          <% if(data2.assistance_ch === 1) {%>
-                          <a style="color:green">ผ่านการอนุมัติ</a>
-                          <a class="btn btn-warning btn-sm" href="/api/status/update?field=assistance_ch&state=0&id=<%= data2.id_activity %>">holding</a>
-                          <% } if (data2.assistance_ch === 0){ %>
-                          <a style="color:blue">รอการอนุมัติ</a>
-                          <a class="btn btn-success btn-sm" href="/api/status/update?field=assistance_ch&state=1&id=<%= data2.id_activity %>">approve</a>
-                          <%  } if (data2.assistance_ch === 2){ %>
-                          <a style="color:red">ไม่ผ่านการอนุมัติ</a>
-                          <a class="btn btn-success btn-sm" href="/api/status/update?field=assistance_ch&state=1&id=<%= data2.id_activity %>">approve</a>
-                          <% }  %>
-                          <a class="btn btn-danger btn-sm" href="/api/status/update?field=assistance_ch&state=2&id=<%= data2.id_activity %>">reject</a>
-                        </h6>
-                  </div>
-                    
-                      <div class="form-group">
-                          <label for="exampleFormControlTextarea1">ความเห็น</label>
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                          <a class="btn btn-primary btn-sm right-block-left button-cm " style="color:white">submit</a>
-                      </div>
-                </div>
-              </div>
+      <div class="container">
+        <div class="row">
+          <div class="col border-block space-block">
+            <div class="space">
+              <h6>ผู้อำนวยการกองกิจการนักศึกษา :
+                <% if(data2.director === 1) {%>
+                <a style="color:green">ผ่านการอนุมัติ</a>
+                <% if(data3.type > 4 ) {%>
+                <a class="btn btn-warning btn-sm"
+                  href="/api/status/update?field=director&state=0&id=<%= data2.id_activity %>">holding</a>
+                <% }  %>
+                <% } if (data2.director === 0){ %>
+                <a style="color:blue">รอการอนุมัติ</a>
+                <% if(data3.type > 4 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=director&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <%  } if (data2.director === 2){ %>
+                <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                <% if(data3.type > 4 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=director&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <% }  %>
+                <% if(data3.type > 4 ) {%>
+                <a class="btn btn-danger btn-sm"
+                  href="/api/status/update?field=director&state=2&id=<%= data2.id_activity %>">reject</a>
+                <% }  %>
+              </h6>
             </div>
+            <% if(data3.type > 4 ) {%>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">ความเห็น</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white">submit</a>
+            </div>
+            <% }  %>
+          </div>
+          <div class="col border-block space-block">
+            <div class="space">
+              <h6>ผู้ช่วยอธิการบดีฝ่ายพัฒนานักศึกษา :
+                <% if(data2.assistance_ch === 1) {%>
+                <a style="color:green">ผ่านการอนุมัติ</a>
+                <% if(data3.type > 5 ) {%>
+                <a class="btn btn-warning btn-sm"
+                  href="/api/status/update?field=assistance_ch&state=0&id=<%= data2.id_activity %>">holding</a>
+                <% }  %>
+                <% } if (data2.assistance_ch === 0){ %>
+                <a style="color:blue">รอการอนุมัติ</a>
+                <% if(data3.type > 5 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=assistance_ch&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <%  } if (data2.assistance_ch === 2){ %>
+                <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                <% if(data3.type > 5 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=assistance_ch&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <% }  %>
+                <% if(data3.type > 5 ) {%>
+                <a class="btn btn-danger btn-sm"
+                  href="/api/status/update?field=assistance_ch&state=2&id=<%= data2.id_activity %>">reject</a>
+                <% }  %>
+              </h6>
+            </div>
+            <% if(data3.type > 5 ) {%>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">ความเห็น</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <a class="btn btn-primary btn-sm right-block-left button-cm " style="color:white">submit</a>
+              <% }  %>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="container">
-                <div class="row">
-                  <div class="col border-block space-block">
-                    <div class="space">
-                        <h6>รองอธิการบดี :
-                            <% if(data2.vice_ch === 1) {%>
-                            <a style="color:green">ผ่านการอนุมัติ</a>
-                            <a class="btn btn-warning btn-sm" href="/api/status/update?field=vice_ch&state=0&id=<%= data2.id_activity %>">holding</a>
-                            <% } if (data2.vice_ch === 0){ %>
-                            <a style="color:blue">รอการอนุมัติ</a>
-                            <a class="btn btn-success btn-sm" href="/api/status/update?field=vice_ch&state=1&id=<%= data2.id_activity %>">approve</a>
-                            <%  } if (data2.vice_ch === 2){ %>
-                            <a style="color:red">ไม่ผ่านการอนุมัติ</a>
-                            <a class="btn btn-success btn-sm" href="/api/status/update?field=vice_ch&state=1&id=<%= data2.id_activity %>">approve</a>
-                            <% }  %>
-                            <a class="btn btn-danger btn-sm" href="/api/status/update?field=vice_ch&state=2&id=<%= data2.id_activity %>">reject</a>
-                          </h6>
-                    </div>
-                      
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">ความเห็น</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white">submit</a>
-                        </div>
-                  </div>
-                </div>
-              </div>
+      <div class="container">
+        <div class="row">
+          <div class="col border-block space-block">
+            <div class="space">
+              <h6>รองอธิการบดี :
+                <% if(data2.vice_ch === 1) {%>
+                <a style="color:green">ผ่านการอนุมัติ</a>
+                <% if(data3.type > 6 ) {%>
+                <a class="btn btn-warning btn-sm"
+                  href="/api/status/update?field=vice_ch&state=0&id=<%= data2.id_activity %>">holding</a>
+                <% }  %>
+                <% } if (data2.vice_ch === 0){ %>
+                <a style="color:blue">รอการอนุมัติ</a>
+                <% if(data3.type > 6 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=vice_ch&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <%  } if (data2.vice_ch === 2){ %>
+                <a style="color:red">ไม่ผ่านการอนุมัติ</a>
+                <% if(data3.type > 6 ) {%>
+                <a class="btn btn-success btn-sm"
+                  href="/api/status/update?field=vice_ch&state=1&id=<%= data2.id_activity %>">approve</a>
+                <% }  %>
+                <% }  %>
+                <% if(data3.type > 6 ) {%>
+                <a class="btn btn-danger btn-sm"
+                  href="/api/status/update?field=vice_ch&state=2&id=<%= data2.id_activity %>">reject</a>
+                <% }  %>
+              </h6>
+            </div>
+            <% if(data3.type > 6 ) {%>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">ความเห็น</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <a class="btn btn-primary btn-sm right-block-left button-cm" style="color:white">submit</a>
+            </div>
+            <% }  %>
+          </div>
+          <div class="col border-block space-block">
+            <div class="space">
 
-              <div class="container">
-                <div class="row border-block space-block">
-                  <div class="col space">
-                    
-                      <h6> สถานะโครงการ :
-                          <% if(data2.adv === 1 && data2.vice_ch === 1 && data2.assistance_ch === 1 && data2.director === 1 && data2.affair === 1 && data2.council === 1 && data2.stdU === 1) {%>
-                          <a class="btn btn-success">ผ่านการอนุมัติ</a>
-                          <% } else { %>
-                          <a class="btn btn-primary" style="color:white">รอการอนุมัติ</a>
-                          <% }  %>
-                        </h6>
-                    
-                  </div>
-                </div>
-              </div>
-      
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row border-block space-block">
+          <div class="col space">
+
+            <h6> สถานะโครงการ :
+              <% if(data2.adv === 1 && data2.vice_ch === 1 && data2.assistance_ch === 1 && data2.director === 1 && data2.affair === 1 && data2.council === 1 && data2.stdU === 1) {%>
+              <a class="btn btn-success">ผ่านการอนุมัติ</a>
+              <% } else { %>
+              <a class="btn btn-primary" style="color:white">รอการอนุมัติ</a>
+              <% }  %>
+            </h6>
+
+          </div>
+        </div>
+      </div>
+
+    
+
   </main>
 
 

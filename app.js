@@ -12,6 +12,14 @@ const doQuery = require('./utils/doQuery')
 var session = require('express-session')
 var login = true
 var axios = require('axios')
+const url = 'https://passport.psu.ac.th/authentication/authentication.asmx?wsdl';
+const soap =require('soap')
+const path = require('path')
+const apiuser = 'http://localhost:7777/api/user'
+const sendMails = require('./utils/email')
+app.use('/public', express.static(path.join(__dirname, 'public')))
+
+
 
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 },
    resave : false, saveUninitialized: false }))
@@ -38,6 +46,8 @@ app.get('/activity/file', (req, res) => {
     res.redirect('/activity')
   }
 })
+
+///////////////////////////////////// LOGOUT /////////////////////////////////////////////////////////////////
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
       login = true
@@ -47,6 +57,7 @@ app.post('/logout', (req, res) => {
 
 
 
+/////////////////////////////////////// LOGIN ///////////////////////////////////////////////////////////////
 app.post('/activity', (req, res) => {
   return getUser().then((resp)=>{
     let body = req.body
@@ -59,23 +70,28 @@ app.post('/activity', (req, res) => {
           
         }
         if(body.email == value[0].email){
-          data3 = {
-            email : body.email,
-            firstname: value[0].firstname,
-            type : value[0].type
-          }
-          session.email = body.email
-          return getActivity().then((resp) => {
-            var sql = `SELECT * FROM statusactivity`
-            doQuery(sql).then((status)=> {
-              res.render('pages/showData', {
-                data: resp,
-                data2: status[0],
-                data3
+          var trustpsw = '8cb2237d0679ca88db6464eac60da96345513964'
+          var trust = 'SHA1(body.password)'
+          
+            data3 = {
+              email : body.email,
+              firstname: value[0].firstname,
+              type : value[0].type
+            }
+            session.email = body.email
+            return getActivity().then((resp) => {
+              var sql = `SELECT * FROM statusactivity`
+              doQuery(sql).then((status)=> {
+                res.render('pages/showData', {
+                  data: resp,
+                  data2: status[0],
+                  data3
+                })
               })
+             
             })
-           
-          })
+          
+          
         }
       }
       else{
@@ -83,21 +99,48 @@ app.post('/activity', (req, res) => {
         data = {
           message: 'Wrong email or passwords'
         }
-        res.render('pages/SignIn', {login, data})
+        res.render('pages/LoginV2', {login, data})
       }
     })
 
   })
 })
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/psulogin', (req, res) => {
+  res.render('pages/loginPSU')
+})
 
+app.post('/psulogin', (req, res) => {
+  soap.createClient(url, (err, client) => {
+    if(err) console.err(err)
+    else{
+      let user = {}
+      user.username = req.body.username
+      user.password = req.body.password
 
+      client.GetStaffDetails(user, function (err, response) {
+        // client.GetStudentDetails(args, function(err, response) {
+        if (err) console.error(err);
+        else {
+            console.log(response);
+            res.send(response);
+            res.render('pages/showData')
+            
+        }
+    });
+    }
+    })
+})
+//////////////////////////////////LOGIN PAGES//////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
   return getUser().then((resp) => {
     // console.log(resp[0].email)
-    res.render('pages/SignIn', {login})
+    console.log(login)
+    res.render('pages/LoginV2', {login})
   })
   
 })
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/index', (req, res) => {
   res.render('pages/index')
@@ -107,15 +150,17 @@ app.get('/activity', (req, res) => {
   return getActivity().then((resp) => {
     var sql = `SELECT * FROM statusactivity`
     doQuery(sql).then((status)=> {
+      console.log(status.data)
       res.render('pages/showData', {
         data: resp,
-        data2: status[0]
+        data2: status,
+        
       })
     })
     
   })
 })
-
+///////////////////////////////////////////////////// CREATE ACTIVITY ///////////////////////////////////////
 app.get('/activity/create', (req, res) => {
   res.render('pages/addActivity')
 })
@@ -123,30 +168,41 @@ app.get('/activity/create', (req, res) => {
 app.post('/activity/create/creating', (req, res) => {
   let body = req.body
   return postActivity(body).then((resp) => {
-    res.redirect('/activity')
+    sendMails().then((resp)=>{
+      res.redirect('/activity')
+    })
+    
   })
 })
-app.get('/user/create', (req, res) => {
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////// CREATE USER ///////////////////////////////////////////////////////
+app.get('/user', (req, res) => {
   res.render('pages/addUser')
 })
-
-
-app.post('/user/create/creating', (req, res) => {
+app.post('/user', (req, res) => {
   let body = req.body
-  return postUser(body).then((resp) => {
-    if(resp.message == 'added success'){
-      res.redirect('/')
-    }
-    if(resp.message == 'email is require'){
-      res.render('pages/addUser', {data: resp})
-    }
-    if(resp.length > 0){
-      res.render('pages/addUser', {data: resp})
-    }
+  
+  return axios.post(apiuser, body).then((resp) => {
+    res.redirect('/')
   })
+  //   if(resp.message == 'added success'){
+  //     console.log({message:"addded success"})
+  //     res.redirect('/')
+  //   }
+  //   if(resp.message == 'email is require'){
+  //     res.render('pages/addUser', {data: resp})
+  //   }
+  //   if(resp.length > 0){
+  //     res.render('pages/addUser', {data: resp})
+  //   }
+  // })
+  // return postUser(body).then((resp) => {
+    
+  // })
 })
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// ADMIN ////////////////////////////////////////////////////////
 app.get('/activity/detail-Admin', (req, res) => {
   
   const query = req.query
@@ -165,10 +221,8 @@ app.get('/activity/detail-Admin', (req, res) => {
       res.redirect('/activity')
     }
   }
-  
-
 })
-
+////////////////////////////////////////// USER //////////////////////////////////////////////////////
 app.get('/activity/detail', (req, res) => {
   const query = req.query
   if (query.id) {
@@ -186,7 +240,8 @@ app.get('/activity/detail', (req, res) => {
   }
 
 })
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// UPDATE DATA ////////////////////////////////////////////////////////
 app.get('/activity/update', (req, res) => {
   const query = req.query
   if (query.id) {
@@ -207,7 +262,7 @@ app.post('/activity/update/updating', (req, res) => {
     res.redirect('/activity')
   })
 })
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')

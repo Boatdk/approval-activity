@@ -15,14 +15,14 @@ module.exports = {
       .catch(error => console.log(error))
     },
     postActivity(body){
-        return axios.post('http://localhost:7777/api/activity/create', body)
+        return axios.post('http://localhost:7777/api/activity', body)
       .then((resp) => {
         return resp.data
       })
       .catch(error => console.log(error))
     },
-    putActivity(body){
-        return axios.post('http://localhost:7777/api/activity/update', body)
+    putActivity(body,id){
+        return axios.put('http://localhost:7777/api/activity/${id}', body)
       .then((resp) => {
         return resp.data
       })

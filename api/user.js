@@ -14,7 +14,7 @@ module.exports = {
       .catch(error => console.log(error))
     },
     postUser(body){
-        return axios.post('http://localhost:7777/api/user/create', body)
+        return axios.post('http://localhost:7777/api/user', body)
       .then((resp) => {
         // console.log(resp.data[0])
         return resp.data

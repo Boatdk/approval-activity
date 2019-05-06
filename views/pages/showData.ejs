@@ -13,7 +13,7 @@
 
   <main>
     <div class="container space-showAll">
-      <h2>Activity</h2>
+      <h2>Activity Lists</h2>
       <p>สามารถเพิ่มโครงการได้ที่นี่ <a href='/activity/create'>add</a></p>
 
     </div>
@@ -35,13 +35,13 @@
                 <% data.forEach(function(Data) { %>
 
               <tr>
-                <th scope="row"><%= Data.id_activity %></th>
+                <th scope="row" style="text-align: center"><%= Data.id_activity %></th>
                 <td><%= Data.act_name %></td>
                 <td><%= Data.org_name%></td>
                 <% if(data2.adv === 1 && data2.vice_ch === 1 && data2.assistance_ch === 1 && data2.director === 1 && data2.affair === 1 && data2.council === 1 && data2.stdU === 1) {%>
-                <td style="text-align: center"><i class="fas fa-check"></i></td>
+                <td style="text-align: center"><i class="fas fa-check" style="color:green"></i></td>
                 <% } else { %>
-                <td style="text-align: center"><i class="fas fa-times"></i></td>
+                <td style="text-align: center"><i class="fas fa-times" style="color:red"></i></td>
                 <% }  %>
                 <td><%= Data.act_start%></td>
                 <td><%= Data.act_end%></td>

@@ -150,9 +150,15 @@ app.get('/psulogin', (req, res) => {
 
 //////////////////////////////////LOGIN PAGES//////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
-  return res.render('pages/LoginV2', {
-    login: true
-  })
+  var data3 = session.data3 ? session.data3: req.session.data3
+  if(data){
+    return res.redirect('/activity')
+  }else{
+    return res.render('pages/LoginV2', {
+      login: true
+    })
+  }
+  
 })
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -242,10 +248,7 @@ app.get('/activity/detail-Admin', (req, res) => {
               //     type: user[0].type
               //   }
               // }
-              
-                 data3 = session.data3 ? session.data3: req.session.data3
-              
-
+              data3 = session.data3 ? session.data3: req.session.data3         
               if(data.length > 0){
                 file = data[0].path
               }
@@ -278,16 +281,16 @@ app.get('/activity/detail', (req, res) => {
         var data3 
         var email = session.email ? session.email:req.session.email
         doQuery(`SELECT * FROM user WHERE email='${email}'`).then((user) => {
-          if(user.length > 0){
-            data3 = {
-              email: user[0].email,
-              firstname: user[0].firstname,
-              type: user[0].type,
-              id: user[0].id_user
-            }
-          }else{
-            data3 = session.data3 ? session.data3:req.session.data3
-          }
+          // if(user.length > 0){
+          //   data3 = {
+          //     email: user[0].email,
+          //     firstname: user[0].firstname,
+          //     type: user[0].type,
+          //     id: user[0].id_user
+          //   }
+          // }
+          
+          data3 = session.data3 ? session.data3:req.session.data3
           res.render('dataID-user', {
             moment: moment,
             data: resp[0],

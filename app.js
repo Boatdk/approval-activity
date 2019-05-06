@@ -229,6 +229,8 @@ app.get('/activity/detail-Admin', (req, res) => {
     } else {
       return res.redirect('/activity')
     }
+  }else{
+    return res.redirect('/activity')
   }
 })
 

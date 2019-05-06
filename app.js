@@ -42,7 +42,7 @@ app.set('view engine', 'ejs')
 app.get('/activity/file', (req, res) => {
   const query = req.query
   if (query.id) {
-    return getActivity(query.id).then((resp) => {
+    doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
       return res.render('pages/upload', {
         data: resp[0]
       })
@@ -82,7 +82,7 @@ app.post('/activity', (req, res) => {
           type: value[0].type
         }
         session.email = body.email
-        return getActivity().then((resp) => {
+        doQuery(`SELECT * FROM activity`).then((resp) => {
           var sql = `SELECT * FROM statusactivity`
           doQuery(sql).then((status) => {
             const data = [];
@@ -174,10 +174,6 @@ app.get('/activity/create', (req, res) => {
   res.render('pages/addActivity')
 })
 
-app.post('/activity/create', (req, res) => {
-  return postActivity(body)
-})
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////// CREATE USER ///////////////////////////////////////////////////////
@@ -192,7 +188,7 @@ app.get('/activity/detail-Admin', (req, res) => {
   const query = req.query
   if (req.session.email) {
     if (query.id) {
-      return getActivity(query.id).then((resp) => {
+      doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
         var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
         doQuery(sql).then(status => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
@@ -216,7 +212,7 @@ app.get('/activity/detail-Admin', (req, res) => {
 app.get('/activity/detail', (req, res) => {
   const query = req.query
   if (query.id) {
-    return getActivity(query.id).then((resp) => {
+    doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
       var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
       doQuery(sql).then(status => {
         res.render('pages/dataID-user', {
@@ -235,7 +231,7 @@ app.get('/activity/detail', (req, res) => {
 app.get('/activity/update', (req, res) => {
   const query = req.query
   if (query.id) {
-    return getActivity(query.id).then((resp) => {
+    doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
       res.render('pages/putActivity', {
         data: resp[0]
       })
@@ -248,7 +244,9 @@ app.get('/activity/update', (req, res) => {
 app.post('/activity/update/updating', (req, res) => {
   let body = req.body
   console.log(body)
-  return putActivity(body).then((resp) => {
+  doQuery(`UPDATE activity SET org_name = '${body.org_name}', book_num = '${body.book_num}', act_name = '${body.act_name}', dear_to = '${body.dear_to}', act_money='${body.act_money}',
+  act_place = '${body.act_place}', mn_from = '${body.mn_from}', act_hours = '${body.act_hours}', tel = '${body.tel}', act_start ='${body.act_start}', act_end='${body.act_end}' 
+  WHERE activity.id_activity = '${body.id_activity}'`).then((resp) => {
     res.redirect('/activity')
   })
 })

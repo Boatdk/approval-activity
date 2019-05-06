@@ -60,7 +60,7 @@ app.post('/logout', (req, res) => {
 
 /////////////////////////////////////// LOGIN ///////////////////////////////////////////////////////////////
 app.post('/activity', (req, res) => {
-  return getUser().then((resp) => {
+  
     let body = req.body
     const session = req.session
     var sql = `SELECT * FROM user WHERE email='${body.email}'`
@@ -111,7 +111,7 @@ app.post('/activity', (req, res) => {
       res.render('pages/LoginV2', { login, data })
     })
 
-  })
+  
 })
 
 app.get('/home', (req, res) => {
@@ -125,7 +125,6 @@ app.get('/psulogin', (req, res) => {
 //////////////////////////////////LOGIN PAGES//////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
     res.render('pages/LoginV2', { login: true })
-
 })
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -30,11 +30,11 @@ router.route('/activity')
     doQuery(sql).then(resp => {
       // console.log(resp.insertId)
       var sql2 = `INSERT INTO statusactivity (id_activity) VALUES ('${resp.insertId}')`
-      doQuery(sql2).then(resp => {
+      doQuery(sql2).then(resp2 => {
         console.log({
           message: 'added success'
         })
-        const url = `http://128.199.147.194:7777/activity/detail-Admin?id=${resp.insertId}`
+        const url = `http://128.199.147.194:7777/activity/detail-Admin?id=${resp2.insertId}`
         sendEmails(url)
         res.redirect('/activity')
         

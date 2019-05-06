@@ -35,7 +35,7 @@ let message = {
 
   // HTML body
   html:`<h2>Students create new activty.Lets check in website</h2>
-  <p>Plaes confirm: this link <a href="${url}">CLICK</a><br/><img src="cid:nyan@example.com"/></p>,`
+  <p>Please confirm: this link <a href="${url}">CLICK</a></p>,`
       
 
 };

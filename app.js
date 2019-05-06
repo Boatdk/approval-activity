@@ -210,7 +210,8 @@ app.get('/user', (req, res) => {
 /////////////////////////////////////// ADMIN ////////////////////////////////////////////////////////
 app.get('/activity/detail-Admin', (req, res) => {
   const query = req.query
-  if (session.email) {
+  const email = session.email ? session.email: req.session.email
+  if (email) {
     if (query.id) {
       doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
         console.log(resp[0])
@@ -218,7 +219,6 @@ app.get('/activity/detail-Admin', (req, res) => {
         doQuery(sql).then(status => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
           doQuery(sql2).then((data) => {
-            const email = session.email ? session.email: req.session.email
             doQuery(`SELECT * FROM user WHERE email='${email}'`).then(user => {
               let data3
               if(user.length > 0){

@@ -150,16 +150,13 @@ app.get('/psulogin', (req, res) => {
 
 //////////////////////////////////LOGIN PAGES//////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
-  var data3 = session.data3 ? session.data3: req.session.data3
-  if(data3){
-    return res.redirect('/activity')
-  }else{
+   
     return res.render('pages/LoginV2', {
       login: true
     })
-  }
   
-})
+  
+  })
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/index', (req, res) => {

@@ -63,10 +63,13 @@ app.get('/activity/file', (req, res) => {
 
 ///////////////////////////////////// LOGOUT /////////////////////////////////////////////////////////////////
 app.post('/logout', (req, res) => {
+  session.destroy((err) => {
+    login = true
+  })
   req.session.destroy((err) => {
     login = true
-    return res.redirect('/')
   })
+  return res.redirect('/')
 })
 
 

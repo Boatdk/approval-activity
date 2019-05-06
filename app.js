@@ -76,7 +76,7 @@ app.post('/activity', (req, res) => {
       }
       var trust = sha1(body.password)
       if (body.email == value[0].email && trust == value[0].password) {
-        data3 = {
+        var data3 = {
           email: body.email,
           firstname: value[0].firstname,
           type: value[0].type
@@ -108,14 +108,17 @@ app.post('/activity', (req, res) => {
         })
       }
     }
-    login = false
-    data = {
-      message: 'Wrong email or passwords'
+    else{
+      login = false
+      var data = {
+        message: 'Wrong email or passwords'
+      }
+      return res.render('pages/LoginV2', {
+        login,
+        data
+      })
     }
-    return res.render('pages/LoginV2', {
-      login,
-      data
-    })
+    
   })
 
 

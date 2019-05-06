@@ -40,7 +40,7 @@ router.route('/psulogin')
                 }
                 const add = await axios.post(postUser,uCreate)
                 console.log(add)
-                res.redirect('/psulogin')
+                return res.redirect('/psulogin')
                 
                //POST DATABASE
               }
@@ -52,10 +52,10 @@ router.route('/psulogin')
                   type: user[0].type
                 }
                 session.email = user[0].emai
-                res.redirect('/activity')
+                return res.redirect('/activity')
               }
             }
-            res.status(500).json({
+            return res.status(500).json({
               message: '500'
             })
           }

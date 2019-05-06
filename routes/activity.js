@@ -1,8 +1,7 @@
 var express = require('express')
-var con = require('../config/route')
 var router = express.Router()
-var mangoObjectId = require('../utils/genId')
 const doQuery = require('../utils/doQuery')
+const sendEmails = require('../utils/email')
 
 router.route('/activity')
 
@@ -32,9 +31,12 @@ router.route('/activity')
       // console.log(resp.insertId)
       var sql2 = `INSERT INTO statusactivity (id_activity) VALUES ('${resp.insertId}')`
       doQuery(sql2).then(resp => {
-        res.json({
+        console.log({
           message: 'added success'
         })
+        sendEmails()
+        res.redirect('/activity')
+        
       })
       var sql3 = `INSERT INTO fileactivity(id_activity) VALUES ('${resp.insertId}')`
       doQuery(sql3).then(resp => {

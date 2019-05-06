@@ -87,10 +87,11 @@ router.route('/user')
                     body.lastname}', SHA1('${body.password}'), 
                     '${body.email}', '${body.tel}', 0)`;
           doQuery(sql).then(resp => {
-            res.json({
+            console.log({
               message: 'added success',
               data: resp
             })
+            res.redirect('/')
           }).catch(err => {
             res.json({
               message: err

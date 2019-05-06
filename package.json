@@ -25,12 +25,16 @@
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
     "hash-int": "^1.0.0",
+    "js-sha1": "^0.6.0",
     "method-override": "^2.3.10",
+    "moment": "^2.24.0",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
     "nock": "^9.4.1",
+    "nodemailer": "^6.1.1",
     "path": "^0.12.7",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "soap": "^0.27.1"
   },
   "devDependencies": {
     "chai": "^4.1.2",

@@ -8,7 +8,7 @@
 <body>
 
   <header>
-        <% include ../partials/header %>
+    <% include ../partials/header %>
   </header>
 
   <main>
@@ -18,48 +18,52 @@
 
     </div>
     <div class="container table-responsive">
-        <table class="table table-hover table-bordered">
-            <thead class="thead-light">
-              <tr class="middle-text">
-                <th scope="col">ลำดับ</th>
-                <th scope="col" class="long">ชื่อโครงการ</th>
-                <th scope="col">องค์กรจัดกิจกรรม</th>
-                <th scope="col">สถานะ</th>
-                <th scope="col">เริ่ม</th>
-                <th scope="col">สิ้นสุด</th>
-                <th scope="col">เบอร์โทร</th>
-                <th scope="col">เพิ่มเติม</th>
-              </tr>
-            </thead>
-            <tbody>
-                <% data.forEach(function(Data) { %>
+      <table class="table table-hover table-bordered">
+        <thead class="thead-light">
+          <tr class="middle-text">
+            <th scope="col">ลำดับ</th>
+            <th scope="col" class="long">ชื่อโครงการ</th>
+            <th scope="col">องค์กรจัดกิจกรรม</th>
+            <th scope="col">สถานะ</th>
+            <th scope="col">เริ่ม</th>
+            <th scope="col">สิ้นสุด</th>
+            <th scope="col">เบอร์โทร</th>
+            <th scope="col">เพิ่มเติม</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%  items.forEach(function(Data) { %>
+          <tr>
+            <th scope="row" style="text-align: center"><%= Data.a.id_activity %></th>
+            <td><%= Data.a.act_name %></td>
+            <td><%= Data.a.org_name%></td>
+            <% if(Data.s.adv === 1 && Data.s.vice_ch === 1 && Data.s.assistance_ch === 1 && Data.s.director === 1 && Data.s.affair === 1 && Data.s.council === 1 && Data.s.stdU === 1) {%>
+            <td style="text-align: center"><i class="fas fa-check" style="color:green"></i></td>
+            <% } else { %>
+            <td style="text-align: center"><i class="fas fa-times" style="color:red"></i></td>
+            <% }  %>
+            <td><%= moment(Data.a.act_start).format('Do MMMM, YYYY') %></td>
+            <td><%= moment(Data.a.act_end).format('Do MMMM, YYYY') %></td>
+            <td><%= Data.a.tel %></td>
+            <td>
+              <form>
+                <%if(data3.type == 0) { %>
+                <button type="button" class="btn btn-info"
+                  onclick="window.location.href='/activity/detail?id=<%= Data.a.id_activity %>'">detail</button>
+                <%} else {%>
+                <button type="button" class="btn btn-primary"
+                  onclick="window.location.href='/activity/detail-Admin?id=<%= Data.a.id_activity %>'">detail</button>
+                <% } %>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
 
-              <tr>
-                <th scope="row" style="text-align: center"><%= Data.id_activity %></th>
-                <td><%= Data.act_name %></td>
-                <td><%= Data.org_name%></td>
-                <% if(data2.adv === 1 && data2.vice_ch === 1 && data2.assistance_ch === 1 && data2.director === 1 && data2.affair === 1 && data2.council === 1 && data2.stdU === 1) {%>
-                <td style="text-align: center"><i class="fas fa-check" style="color:green"></i></td>
-                <% } else { %>
-                <td style="text-align: center"><i class="fas fa-times" style="color:red"></i></td>
-                <% }  %>
-                <td><%= Data.act_start%></td>
-                <td><%= Data.act_end%></td>
-                <td><%= Data.tel %></td>
-                <td><form>
-                   <%if(data3.type == 0) { %>
-                    <button type="button" class="btn btn-info" onclick="window.location.href='/activity/detail?id=<%= Data.id_activity %>'">detail</button>
-                   <%} else {%>
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='/activity/detail-Admin?id=<%= Data.id_activity %>'">detail</button>
-                    <% } %>
-                  </form></td>
-              </tr>
-            </tbody>
-            <% }); %>
-          </table>
-    
+
     </div>
-    
+
   </main>
 
 

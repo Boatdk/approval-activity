@@ -157,7 +157,7 @@ app.get('/index', (req, res) => {
   var data3 = session.data3
   return res.render('pages/index', {data3})
 })
-
+///////////////////////////////////// GET ACTIVITY PAGE ////////////////////////////////////////////////////
 app.get('/activity', (req, res) => {
   var data3 = session.data3
   var sql0 = `SELECT * FROM activity`
@@ -214,11 +214,7 @@ app.get('/activity/detail-Admin', (req, res) => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
           doQuery(sql2).then((data) => {
             doQuery(`SELECT * FROM user WHERE email='${session.email}'`).then(user => {
-              var data3 = {
-                email: user[0].email,
-                firstname: user[0].firstname,
-                type: user[0].type
-              }
+              var data3 = session.data3
               return res.render('dataID-Admin', {
                 data: resp[0],
                 data2: status[0],

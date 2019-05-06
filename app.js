@@ -87,6 +87,7 @@ app.post('/activity', (req, res) => {
           firstname: value[0].firstname,
           type: value[0].type
         }
+        session.data3 = data3
         session.email = body.email
         doQuery(`SELECT * FROM activity`).then((resp) => {
           var sql = `SELECT * FROM statusactivity`
@@ -239,10 +240,13 @@ app.get('/activity/detail', (req, res) => {
   if (query.id) {
     doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
       var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
+      
       doQuery(sql).then(status => {
+        var data3 = req.session.data3
         res.render('dataID-user', {
           data: resp[0],
-          data2: status[0]
+          data2: status[0],
+          data3
         })
       })
     })
@@ -257,8 +261,10 @@ app.get('/activity/update', (req, res) => {
   const query = req.query
   if (query.id) {
     doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
+      var data3 = req.session.data3
       res.render('pages/putActivity', {
-        data: resp[0]
+        data: resp[0],
+        data3
       })
     })
   } else {

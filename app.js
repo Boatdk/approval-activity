@@ -250,6 +250,7 @@ app.get('/activity/detail-Admin', (req, res) => {
                 file = data[0].path
               }
               return res.render('dataID-Admin', {
+                moment: moment,
                 data: resp[0],
                 data2: status[0],
                 filepath: file,
@@ -288,6 +289,7 @@ app.get('/activity/detail', (req, res) => {
             data3 = session.data3 ? session.data3:req.session.data3
           }
           res.render('dataID-user', {
+            moment: moment,
             data: resp[0],
             data2: status[0],
             data3

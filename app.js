@@ -123,7 +123,7 @@ app.get('/psulogin', (req, res) => {
 })
 
 //////////////////////////////////LOGIN PAGES//////////////////////////////////////////////////////////////////
-app.get('/', (req, res) => {
+app.get('/login', (req, res) => {
   return getUser().then((resp) => {
     // console.log(resp[0].email)
     res.render('pages/LoginV2', { login: true })

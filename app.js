@@ -15,11 +15,16 @@ const path = require('path')
 const sendMails = require('./utils/email')
 sha1 = require('js-sha1');
 
+
 app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
+//////////////// VIEW EJS /////////////////////
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'));
 
 
+///////////////// SESSION /////////////////
 app.use(session({
   secret: 'keyboard cat',
   cookie: {
@@ -29,6 +34,7 @@ app.use(session({
   saveUninitialized: false
 }))
 
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
@@ -37,7 +43,6 @@ app.use(bodyParser.urlencoded({
 app.use(morgan('dev'))
 app.use(methodOverride())
 
-app.set('view engine', 'ejs')
 
 app.get('/activity/file', (req, res) => {
   const query = req.query

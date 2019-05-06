@@ -159,6 +159,7 @@ app.get('/index', (req, res) => {
 })
 
 app.get('/activity', (req, res) => {
+  var data3 = session.data3
   var sql0 = `SELECT * FROM activity`
   doQuery(sql0).then((resp) => {
     var sql = `SELECT * FROM statusactivity`
@@ -180,7 +181,8 @@ app.get('/activity', (req, res) => {
         moment: moment,
         data: resp,
         data2: status,
-        items: data
+        items: data,
+        data3
       })
     })
 

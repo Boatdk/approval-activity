@@ -273,14 +273,27 @@ app.get('/activity/detail', (req, res) => {
   if (query.id) {
     doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
       var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
-      
       doQuery(sql).then(status => {
-        var data3 = session.data3
-        res.render('dataID-user', {
-          data: resp[0],
-          data2: status[0],
-          data3
+        var data3 
+        var email = session.email ? session.email:req.session.email
+        doQuery(`SELECT * FROM user WHERE email='${email}'`).then((user) => {
+          if(user.length > 0){
+            data3 = {
+              email: user[0].email,
+              firstname: user[0].firstname,
+              type: user[0].type,
+              id: user[0].id_user
+            }
+          }else{
+            data3 = session.data3 ? session.data3:req.session.data3
+          }
+          res.render('dataID-user', {
+            data: resp[0],
+            data2: status[0],
+            data3
+          })
         })
+        
       })
     })
   } else {

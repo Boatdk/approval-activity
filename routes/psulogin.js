@@ -51,8 +51,9 @@ router.route('/psulogin')
                   firstname: user[0].firstname,
                   type: user[0].type
                 }
-                session.email = user[0].email
                 session.data3 = data3
+                session.email = user[0].email
+                
                 return res.redirect('/activity')
               }
             }

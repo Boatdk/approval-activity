@@ -203,14 +203,14 @@ app.get('/user', (req, res) => {
 app.get('/activity/detail-Admin', (req, res) => {
 
   const query = req.query
-  if (req.session.email) {
+  if (session.email) {
     if (query.id) {
       doQuery(`SELECT * FROM activity WHERE id_activity='${query.id}'`).then((resp) => {
         var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
         doQuery(sql).then(status => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
           doQuery(sql2).then((data) => {
-            doQuery(`SELECT * FROM user WHERE email='${req.session.email}'`).then(user => {
+            doQuery(`SELECT * FROM user WHERE email='${session.email}'`).then(user => {
               var data3 = {
                 email: user[0].email,
                 firstname: user[0].firstname,

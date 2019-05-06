@@ -20,9 +20,13 @@ app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 //////////////// VIEW EJS /////////////////////
-app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, 'views'));
-app.set('views', path.join(__dirname, 'views/pages'));
+// app.set('view engine', 'ejs')
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('views', path.join(__dirname, 'views/pages'));
+
+app.set('views',__dirname+'/views');
+
+app.set('view engine','ejs');
 
 ///////////////// SESSION /////////////////
 app.use(session({

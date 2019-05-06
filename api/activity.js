@@ -5,9 +5,9 @@ module.exports = {
     getActivity(id){
         let url
         if (id) {
-            url = `/api/activity/${id}`
+            url = `http://128.199.147.194:7777/api/activity/${id}`
         }else {
-            url = `/api/activity`
+            url = `http://128.199.147.194:7777/api/activity`
         }
     return axios
       .get(url)

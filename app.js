@@ -21,8 +21,12 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 
 app.use(session({
-  secret: 'keyboard cat', cookie: { maxAge: 60000 },
-  resave: false, saveUninitialized: false
+  secret: 'keyboard cat',
+  cookie: {
+    maxAge: 60000
+  },
+  resave: false,
+  saveUninitialized: false
 }))
 
 app.use(bodyParser.json())
@@ -39,12 +43,12 @@ app.get('/activity/file', (req, res) => {
   const query = req.query
   if (query.id) {
     return getActivity(query.id).then((resp) => {
-      res.render('pages/upload', {
+      return res.render('pages/upload', {
         data: resp[0]
       })
     })
   } else {
-    res.redirect('/activity')
+    return res.redirect('/activity')
   }
 })
 
@@ -52,7 +56,7 @@ app.get('/activity/file', (req, res) => {
 app.post('/logout', (req, res) => {
   req.session.destroy((err) => {
     login = true
-    res.redirect('/')
+    return res.redirect('/')
   })
 })
 
@@ -60,80 +64,86 @@ app.post('/logout', (req, res) => {
 
 /////////////////////////////////////// LOGIN ///////////////////////////////////////////////////////////////
 app.post('/activity', (req, res) => {
-  
-    let body = req.body
-    const session = req.session
-    var sql = `SELECT * FROM user WHERE email='${body.email}'`
-    doQuery(sql).then((value) => {
-      if (value[0]) {
-        console.log(value)
-        if (body.email != value[0].email) {
 
+  let body = req.body
+  const session = req.session
+  var sql = `SELECT * FROM user WHERE email='${body.email}'`
+  doQuery(sql).then((value) => {
+    if (value[0]) {
+      console.log(value)
+      if (body.email != value[0].email) {
+
+      }
+      var trust = sha1(body.password)
+      if (body.email == value[0].email && trust == value[0].password) {
+        data3 = {
+          email: body.email,
+          firstname: value[0].firstname,
+          type: value[0].type
         }
-        var trust = sha1(body.password)
-        if (body.email == value[0].email && trust == value[0].password) {
-          data3 = {
-            email: body.email,
-            firstname: value[0].firstname,
-            type: value[0].type
-          }
-          session.email = body.email
-          return getActivity().then((resp) => {
-            var sql = `SELECT * FROM statusactivity`
-            doQuery(sql).then((status) => {
-              const data = [];
-              resp.map(a => {
-                status.map(s => {
-                  if (a.id_activity === s.id_activity) {
-                    let item = {
-                      a,
-                      s
-                    }
-                    data.push(item)
+        session.email = body.email
+        return getActivity().then((resp) => {
+          var sql = `SELECT * FROM statusactivity`
+          doQuery(sql).then((status) => {
+            const data = [];
+            resp.map(a => {
+              status.map(s => {
+                if (a.id_activity === s.id_activity) {
+                  let item = {
+                    a,
+                    s
                   }
-                })
-              })
-              res.render('pages/showData', {
-                data: resp,
-                moment: moment,
-                data2: status[0],
-                items: data,
-                data3
+                  data.push(item)
+                }
               })
             })
+            return res.render('pages/showData', {
+              data: resp,
+              moment: moment,
+              data2: status[0],
+              items: data,
+              data3
+            })
           })
-        }
+        })
       }
-      login = false
-      data = {
-        message: 'Wrong email or passwords'
-      }
-      res.render('pages/LoginV2', { login, data })
+    }
+    login = false
+    data = {
+      message: 'Wrong email or passwords'
+    }
+    return res.render('pages/LoginV2', {
+      login,
+      data
     })
+  })
 
-  
+
 })
 
 app.get('/home', (req, res) => {
-  res.render('layout/home')
+  return res.render('layout/home')
 })
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/psulogin', (req, res) => {
-  res.render('pages/loginPSU')
+  return res.render('pages/loginPSU')
 })
 
 //////////////////////////////////LOGIN PAGES//////////////////////////////////////////////////////////////////
 app.get('/', (req, res) => {
-    res.render('pages/LoginV2', { login: true })
+  return res.render('pages/LoginV2', {
+    login: true
+  })
 })
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/index', (req, res) => {
-  res.render('pages/index')
+  return res.render('pages/index')
 })
 
 app.get('/activity', (req, res) => {
-  return getActivity().then((resp) => {
+  var sql0 = `SELECT * FROM activity`
+  doQuery(sql0).then((resp) => {
     var sql = `SELECT * FROM statusactivity`
     doQuery(sql).then((status) => {
       // console.log(status)
@@ -149,7 +159,7 @@ app.get('/activity', (req, res) => {
           }
         })
       })
-      res.render('pages/showData', {
+      return res.render('pages/showData', {
         moment: moment,
         data: resp,
         data2: status,
@@ -165,7 +175,7 @@ app.get('/activity/create', (req, res) => {
 })
 
 app.post('/activity/create', (req, res) => {
-   return postActivity(body)
+  return postActivity(body)
 })
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,16 +196,16 @@ app.get('/activity/detail-Admin', (req, res) => {
         var sql = `SELECT * FROM statusactivity WHERE id_activity='${query.id}'`
         doQuery(sql).then(status => {
           var sql2 = `SELECT * FROM fileactivity WHERE id_activity='${query.id}'`
-            doQuery(sql2).then((data) => {
-              console.log(data[0].path)
-              res.render('pages/dataID-Admin', {
-                data: resp[0],
-                data2: status[0],
-                filepath: data[0].path
-              })
+          doQuery(sql2).then((data) => {
+            console.log(data[0].path)
+            res.render('pages/dataID-Admin', {
+              data: resp[0],
+              data2: status[0],
+              filepath: data[0].path
             })
           })
         })
+      })
     } else {
       res.redirect('/activity')
     }

@@ -24,9 +24,9 @@ router.route('/activity')
   .post((req, res) => {
     var body = req.body
     console.log(body)
-    var sql = `INSERT INTO activity(org_name, book_num, act_name, dear_to, act_start, act_end, act_place, act_money, act_hours, tel, mn_from) 
+    var sql = `INSERT INTO activity(org_name, book_num, act_name, dear_to, act_start, act_end, act_place, act_money, act_hours, tel, mn_from, id_user) 
               VALUES ('${body.org_name}', '${body.book_num}', '${body.act_name}', '${body.dear_to}', '${body.act_start}', 
-              '${body.act_end}', '${body.act_place}','${body.act_money}', '${body.act_hours}', '${body.tel}', '${body.mn_from}')`
+              '${body.act_end}', '${body.act_place}','${body.act_money}', '${body.act_hours}', '${body.tel}', '${body.mn_from}', '${body.id_user}')`
     doQuery(sql).then(resp => {
       // console.log(resp.insertId)
       var sql2 = `INSERT INTO statusactivity (id_activity) VALUES ('${resp.insertId}')`

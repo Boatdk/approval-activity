@@ -197,7 +197,15 @@ app.get('/activity', (req, res) => {
 //////////////////////////////////////// ACTIVITY /////////////////////////////////////////////////////
 app.get('/activity/create', (req, res) => {
   var data3 = session.data3 ? session.data3: req.session.data3
-  res.render('pages/addActivity', {data3})
+  doQuery(`SELECT * FROM user WHERE email='${email}'`).then(user=>{
+    if(user.length > 0){
+      return res.render('pages/addActivity', {data3,user:user[0]})
+    }
+    else{
+      return res.redirect('/activity')
+    }
+  })
+  
 })
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

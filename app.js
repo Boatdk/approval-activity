@@ -221,6 +221,7 @@ app.get('/activity/detail-Admin', (req, res) => {
           doQuery(sql2).then((data) => {
             doQuery(`SELECT * FROM user WHERE email='${email}'`).then(user => {
               let data3
+              let file = ''
               if(user.length > 0){
                 data3 = {
                   email: user[0].email,
@@ -231,10 +232,14 @@ app.get('/activity/detail-Admin', (req, res) => {
               else{
                  data3 = session.data3 ? session.data3: req.session.data3
               }
+
+              if(data.length > 0){
+                file = data[0].path
+              }
               return res.render('dataID-Admin', {
                 data: resp[0],
                 data2: status[0],
-                filepath: data[0].path,
+                filepath: file,
                 data3
               })
             })   

@@ -1,0 +1,40 @@
+version: "3.1"
+services:
+   db1:
+    image: mariadb:latest
+    container_name: db1
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=test
+      - "TZ=Asia/Bangkok"
+    volumes:
+      - /home/boatdk/mysql:/var/lib/mysql
+  
+   phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+     - PMA_ARBITRARY=0
+     - PMA_HOST=db1
+     - "TZ=Asia/Bangkok"
+    restart: always
+    depends_on:
+     - db1
+    ports:
+     - 8090:80
+
+   app:
+    container_name: app
+    restart: always
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "7777:7777"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - SECRET=WYSIWYG
+      - DB_HOST=mongodb://mongo/phuketgolf
+    depends_on:
+     - db1

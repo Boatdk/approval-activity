@@ -1,0 +1,32 @@
+const axios = require('axios')
+var localhost = `http://localhost:7777/api/activity`
+var ip = 'http://128.199.241.168:7777'
+const HOST = 'http://128.199.147.194:7777'
+module.exports = {
+    getActivity(id){
+        let url
+        if (id) {
+            url = `${HOST}/api/activity/${id}`
+        }else {
+            url = `${HOST}/api/activity`
+        }
+    return axios
+      .get(url)
+      .then(res => res.data)
+      .catch(error => console.log(error))
+    },
+    postActivity(body){
+        return axios.post('${HOST}/api/activity/create', body)
+      .then((resp) => {
+        return resp.data
+      })
+      .catch(error => console.log(error))
+    },
+    putActivity(body){
+        return axios.post('http://localhost:7777/api/activity/update', body)
+      .then((resp) => {
+        return resp.data
+      })
+      .catch(error => console.log(error))
+    }
+}

@@ -140,9 +140,6 @@ app.post('/activity', (req, res) => {
 
 })
 
-app.get('/home', (req, res) => {
-  return res.render('layout/home')
-})
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/psulogin', (req, res) => {
   return res.render('pages/loginPSU')
@@ -157,7 +154,8 @@ app.get('/', (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/index', (req, res) => {
-  return res.render('pages/index')
+  var data3 = req.session.data3
+  return res.render('pages/index', {data3})
 })
 
 app.get('/activity', (req, res) => {

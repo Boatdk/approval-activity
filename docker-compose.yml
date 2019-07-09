@@ -35,6 +35,6 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - SECRET=WYSIWYG
-      - DB_HOST=mongodb://mongo/phuketgolf
+      - DB_HOST=mongodb://
     depends_on:
      - db1
